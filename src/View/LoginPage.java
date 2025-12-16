@@ -48,6 +48,7 @@ public class LoginPage extends javax.swing.JFrame {
         Passfield = new javax.swing.JPasswordField();
         LoginpageReg = new javax.swing.JButton();
         LoginpageLog = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         Pass = new javax.swing.JLabel();
         Logintxt = new javax.swing.JLabel();
         User = new javax.swing.JLabel();
@@ -66,10 +67,10 @@ public class LoginPage extends javax.swing.JFrame {
                 UserfieldActionPerformed(evt);
             }
         });
-        jPanel1.add(Userfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 430, 150, -1));
+        jPanel1.add(Userfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 490, 150, -1));
 
         Passfield.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
-        jPanel1.add(Passfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 480, 150, -1));
+        jPanel1.add(Passfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 540, 150, -1));
 
         LoginpageReg.setBackground(new java.awt.Color(0, 51, 255));
         LoginpageReg.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -83,7 +84,12 @@ public class LoginPage extends javax.swing.JFrame {
                 LoginpageRegMouseExited(evt);
             }
         });
-        jPanel1.add(LoginpageReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 590, -1, -1));
+        LoginpageReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginpageRegActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LoginpageReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 640, -1, -1));
 
         LoginpageLog.setBackground(new java.awt.Color(0, 51, 255));
         LoginpageLog.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -102,25 +108,28 @@ public class LoginPage extends javax.swing.JFrame {
                 LoginpageLogActionPerformed(evt);
             }
         });
-        jPanel1.add(LoginpageLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 550, 100, -1));
+        jPanel1.add(LoginpageLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 600, 100, -1));
 
-        Pass.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 300, 170));
+
+        Pass.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         Pass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Pass.setText("Password:");
-        jPanel1.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 480, -1, -1));
+        jPanel1.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, -1, -1));
 
         Logintxt.setFont(new java.awt.Font("Segoe UI Emoji", 3, 36)); // NOI18N
         Logintxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Logintxt.setText("LOGIN PAGE");
         jPanel1.add(Logintxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 270, -1));
 
-        User.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
+        User.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         User.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         User.setText("Username:");
-        jPanel1.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, -1, -1));
+        jPanel1.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 480, -1, 40));
 
         LoginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/registerimage.png"))); // NOI18N
-        jPanel1.add(LoginBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -540, -1, -1));
+        jPanel1.add(LoginBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -250, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -160,14 +169,21 @@ public class LoginPage extends javax.swing.JFrame {
     // Password is correct
     javax.swing.JOptionPane.showMessageDialog(this, "Login successful!");
     // Optionally open your HomePage:
-    HomePage home = new HomePage();
-    home.setVisible(true);
+    AdminPannel admin = new AdminPannel();
+    admin.setVisible(true);
      // close login page
 } else {
     // Password incorrect
-    javax.swing.JOptionPane.showMessageDialog(this, "Invalid password. Try again.");
+    javax.swing.JOptionPane.showMessageDialog(this, "Invalid password or username. Try again.");
 }
     }//GEN-LAST:event_LoginpageLogActionPerformed
+
+    private void LoginpageRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginpageRegActionPerformed
+        // TODO add your handling code here:
+        Register register = new Register();
+        register.setvisible(true);
+        this.dispose();
+    }//GEN-LAST:event_LoginpageRegActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -203,17 +219,18 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JPasswordField Passfield;
     private javax.swing.JLabel User;
     private javax.swing.JTextField Userfield;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
-    public Object getLoginButton() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
+    public javax.swing.JButton getLoginButton() {
+    return LoginpageLog; // your login button
+}
 
     public String getPassword() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    // Assuming your button variable is LoginpageLog
+    
 
 
 }

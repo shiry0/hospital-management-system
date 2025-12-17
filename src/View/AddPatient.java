@@ -4,6 +4,11 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author upash
@@ -33,8 +38,27 @@ public class AddPatient extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         AddPatientPanel = new javax.swing.JPanel();
         Addpatientxt = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        Home = new javax.swing.JButton();
+        Patientpanel = new javax.swing.JPanel();
+        ID = new javax.swing.JLabel();
+        IDField = new javax.swing.JTextField();
+        Name = new javax.swing.JLabel();
+        NameField = new javax.swing.JTextField();
+        Gender = new javax.swing.JLabel();
+        Male = new javax.swing.JRadioButton();
+        Female = new javax.swing.JRadioButton();
+        Contact = new javax.swing.JLabel();
+        ContactField = new javax.swing.JTextField();
+        Address = new javax.swing.JLabel();
+        AddressField = new javax.swing.JTextField();
+        Age = new javax.swing.JLabel();
+        AgeField = new javax.swing.JTextField();
+        Save = new javax.swing.JButton();
+        Table = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Patenttable = new javax.swing.JTable();
+        SortById = new javax.swing.JButton();
+        SortByName = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1707, 1067));
@@ -58,6 +82,13 @@ public class AddPatient extends javax.swing.JFrame {
         Addpatientxt.setFont(new java.awt.Font("Segoe UI Emoji", 1, 36)); // NOI18N
         Addpatientxt.setText("Add Patients");
 
+        Home.setText("Home");
+        Home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AddPatientPanelLayout = new javax.swing.GroupLayout(AddPatientPanel);
         AddPatientPanel.setLayout(AddPatientPanelLayout);
         AddPatientPanelLayout.setHorizontalGroup(
@@ -65,43 +96,203 @@ public class AddPatient extends javax.swing.JFrame {
             .addGroup(AddPatientPanelLayout.createSequentialGroup()
                 .addGap(696, 696, 696)
                 .addComponent(Addpatientxt)
-                .addContainerGap(790, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
+                .addComponent(Home)
+                .addGap(286, 286, 286))
         );
         AddPatientPanelLayout.setVerticalGroup(
             AddPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddPatientPanelLayout.createSequentialGroup()
                 .addContainerGap(92, Short.MAX_VALUE)
-                .addComponent(Addpatientxt)
+                .addGroup(AddPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Home)
+                    .addComponent(Addpatientxt))
                 .addGap(18, 18, 18))
         );
 
         Addpatientbg.add(AddPatientPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 0, 1700, 150));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+        Patientpanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        ID.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        ID.setText("ID:");
+
+        IDField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDFieldActionPerformed(evt);
+            }
+        });
+        IDField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                IDFieldKeyTyped(evt);
+            }
+        });
+
+        Name.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Name.setText("Name:");
+
+        NameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NameFieldKeyTyped(evt);
+            }
+        });
+
+        Gender.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Gender.setText("Gender:");
+
+        Male.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        Male.setText("Male");
+        Male.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MaleActionPerformed(evt);
+            }
+        });
+
+        Female.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        Female.setText("Female");
+
+        Contact.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Contact.setText("Contact:");
+
+        ContactField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ContactFieldActionPerformed(evt);
+            }
+        });
+        ContactField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ContactFieldKeyTyped(evt);
+            }
+        });
+
+        Address.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Address.setText("Address:");
+
+        Age.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Age.setText("Age:");
+
+        AgeField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                AgeFieldKeyTyped(evt);
+            }
+        });
+
+        Save.setText("Save");
+        Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PatientpanelLayout = new javax.swing.GroupLayout(Patientpanel);
+        Patientpanel.setLayout(PatientpanelLayout);
+        PatientpanelLayout.setHorizontalGroup(
+            PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PatientpanelLayout.createSequentialGroup()
+                .addGap(123, 123, 123)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Address)
+                    .addGroup(PatientpanelLayout.createSequentialGroup()
+                        .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Contact, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ID, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Gender, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Name, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Age, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(AgeField, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                                .addComponent(ContactField)
+                                .addComponent(AddressField))
+                            .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PatientpanelLayout.createSequentialGroup()
+                                .addComponent(Male, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(Female)))
+                        .addGap(34, 34, 34)
+                        .addComponent(Save)))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+        PatientpanelLayout.setVerticalGroup(
+            PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PatientpanelLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ID)
+                    .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Name)
+                    .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Gender)
+                    .addComponent(Male)
+                    .addComponent(Female))
+                .addGap(37, 37, 37)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Contact))
+                .addGap(42, 42, 42)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Address))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Age)
+                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Save))
+                .addGap(66, 66, 66))
         );
 
-        Addpatientbg.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 720, 490));
+        Addpatientbg.add(Patientpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 720, 490));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+        Table.setBackground(new java.awt.Color(255, 255, 255));
+
+        Patenttable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Age", "Contact", "Gender", "Address"
+            }
+        ));
+        DefaultTableModel model = new DefaultTableModel() {
+            //making cells uneditable
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        // Set column names
+        model.setColumnIdentifiers(new Object[]{"ID", "Name", "Gender", "Contact", "Address", "Age"});
+
+        Patenttable.setModel(model);
+        jScrollPane1.setViewportView(Patenttable);
+
+        javax.swing.GroupLayout TableLayout = new javax.swing.GroupLayout(Table);
+        Table.setLayout(TableLayout);
+        TableLayout.setHorizontalGroup(
+            TableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+        TableLayout.setVerticalGroup(
+            TableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
         );
 
-        Addpatientbg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 590, 430));
+        Addpatientbg.add(Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 590, 430));
+
+        SortById.setText("Sort By Id");
+        Addpatientbg.add(SortById, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
+
+        SortByName.setText("Sort By Name");
+        Addpatientbg.add(SortByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 270, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,6 +309,103 @@ public class AddPatient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void IDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDFieldActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_IDFieldActionPerformed
+
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+        // TODO add your handling code here:
+       // Get the table model
+    DefaultTableModel model = (DefaultTableModel) Patenttable.getModel();
+    
+            
+    // Get TEXT from your text fields (not the labels!)
+    String id = IDField.getText().trim();
+    String name = NameField.getText().trim();  // Make sure this is the TEXT FIELD, not the label
+    String age = AgeField.getText().trim();
+    String contact = ContactField.getText().trim();
+    String address = AddressField.getText().trim();
+    
+    // Get selected gender from radio buttons
+    String gender = "";
+    if (Male.isSelected()) {
+        gender = "Male";
+    } else if (Female.isSelected()) {
+        gender = "Female";
+    }
+    
+    // Validate that required fields are not empty
+    if (id.isEmpty() || name.isEmpty() || gender.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all required fields!", 
+                                      "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Add a new row to the table with the TEXT values
+    model.addRow(new Object[]{id, name, gender, contact, address, age}); 
+    // Adjust order to match your table columns
+    
+    // Clear the fields after saving
+    clearFields();
+    
+    JOptionPane.showMessageDialog(this, "Patient added successfully!", 
+                                  "Success", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_SaveActionPerformed
+
+    private void MaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MaleActionPerformed
+
+    private void ContactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactFieldActionPerformed
+        // TODO add your handling code here:
+            
+    }//GEN-LAST:event_ContactFieldActionPerformed
+
+    private void ContactFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ContactFieldKeyTyped
+                                          
+        // TODO add your handling code here:
+            char c = evt.getKeyChar();
+    if (!Character.isDigit(c)) {
+        evt.consume();
+     
+    }
+    }//GEN-LAST:event_ContactFieldKeyTyped
+
+    private void IDFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDFieldKeyTyped
+        // TODO add your handling code here:
+         char c = evt.getKeyChar();
+    if (!Character.isDigit(c)) {
+        evt.consume();
+     
+    }
+    }//GEN-LAST:event_IDFieldKeyTyped
+
+    private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        AdminPannel panel = new AdminPannel();
+        panel.setVisible(true);
+    }//GEN-LAST:event_HomeActionPerformed
+
+    private void NameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NameFieldKeyTyped
+        // TODO add your handling code here:
+         char c = evt.getKeyChar();
+    if (Character.isDigit(c)) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_NameFieldKeyTyped
+
+    private void AgeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AgeFieldKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+    if (!Character.isDigit(c)) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_AgeFieldKeyTyped
+    
 
     /**
      * @param args the command line arguments
@@ -149,8 +437,31 @@ public class AddPatient extends javax.swing.JFrame {
     private javax.swing.JPanel AddpatientLogo;
     private javax.swing.JPanel Addpatientbg;
     private javax.swing.JLabel Addpatientxt;
+    private javax.swing.JLabel Address;
+    private javax.swing.JTextField AddressField;
+    private javax.swing.JLabel Age;
+    private javax.swing.JTextField AgeField;
+    private javax.swing.JLabel Contact;
+    private javax.swing.JTextField ContactField;
+    private javax.swing.JRadioButton Female;
+    private javax.swing.JLabel Gender;
+    private javax.swing.JButton Home;
+    private javax.swing.JLabel ID;
+    private javax.swing.JTextField IDField;
+    private javax.swing.JRadioButton Male;
+    private javax.swing.JLabel Name;
+    private javax.swing.JTextField NameField;
+    public javax.swing.JTable Patenttable;
+    private javax.swing.JPanel Patientpanel;
+    private javax.swing.JButton Save;
+    private javax.swing.JButton SortById;
+    private javax.swing.JButton SortByName;
+    private javax.swing.JPanel Table;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void clearFields() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

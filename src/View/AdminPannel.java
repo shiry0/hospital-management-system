@@ -72,8 +72,16 @@ public class AdminPannel extends javax.swing.JFrame {
         AddPic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         AddPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/patient.png"))); // NOI18N
         AddPic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddPicMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AddPicMouseEntered(evt);
+            }
+        });
+        AddPic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                AddPicKeyPressed(evt);
             }
         });
 
@@ -81,6 +89,9 @@ public class AdminPannel extends javax.swing.JFrame {
         Addtxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Addtxt.setText("Add Patients");
         Addtxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddtxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AddtxtMouseEntered(evt);
             }
@@ -107,7 +118,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addComponent(AddPic, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Addtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         AdminPageMain.add(AddPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 300, 280));
@@ -136,14 +147,14 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         Checkup.add(Checkuptxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, -1));
 
-        AdminPageMain.add(Checkup, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 300, 280));
+        AdminPageMain.add(Checkup, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 300, 280));
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
         jPanel9.setMinimumSize(new java.awt.Dimension(500, 500));
         jPanel9.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        AdminPageMain.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, 300, 270));
+        AdminPageMain.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, 310, 280));
 
         ReportPanel.setBackground(new java.awt.Color(255, 255, 255));
         ReportPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
@@ -169,7 +180,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         ReportPanel.add(Patienttxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
 
-        AdminPageMain.add(ReportPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 300, 260));
+        AdminPageMain.add(ReportPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 300, 260));
 
         MedPanel.setBackground(new java.awt.Color(255, 255, 255));
         MedPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
@@ -194,7 +205,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         MedPanel.add(Medtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
 
-        AdminPageMain.add(MedPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 300, 260));
+        AdminPageMain.add(MedPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, 300, 260));
 
         Poweroff.setBackground(new java.awt.Color(255, 255, 255));
         Poweroff.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
@@ -219,12 +230,12 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         Poweroff.add(Poweroffpic, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, -1));
 
-        AdminPageMain.add(Poweroff, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, 300, 260));
+        AdminPageMain.add(Poweroff, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 340, 310, 260));
 
-        AdminPage.add(AdminPageMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 1200, 680));
+        AdminPage.add(AdminPageMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 990, 680));
 
         Adminpagebg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/AdminBg.png"))); // NOI18N
-        AdminPage.add(Adminpagebg, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 270, 500, 480));
+        AdminPage.add(Adminpagebg, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 270, 470, 350));
 
         getContentPane().add(AdminPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1707, 1067));
 
@@ -280,6 +291,25 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
         Powerofftxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }//GEN-LAST:event_PowerofftxtMouseEntered
+
+    private void AddPicKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AddPicKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_AddPicKeyPressed
+
+    private void AddPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddPicMouseClicked
+        // TODO add your handling code here:
+        this.dispose(); // Close current window
+    AddPatient patient = new AddPatient();
+    patient.setVisible(true);
+    }//GEN-LAST:event_AddPicMouseClicked
+
+    private void AddtxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddtxtMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        AddPatient patient = new AddPatient();
+        patient.setVisible(true);
+    }//GEN-LAST:event_AddtxtMouseClicked
 
     /**
      * @param args the command line arguments

@@ -4,10 +4,12 @@
  */
 package View;
 
+import Controll.PatientQueueController;
+import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+
 
 /**
  *
@@ -16,14 +18,22 @@ import javax.swing.table.TableRowSorter;
 public class AddPatient extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddPatient.class.getName());
+   private PatientQueueController controller;
+    
+    
+   
 
+    
     /**
      * Creates new form AddPatient
      */
     public AddPatient() {
         initComponents();
+        controller = PatientQueueController.getInstance();
+        loadQueueData();
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,6 +43,7 @@ public class AddPatient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         Addpatientbg = new javax.swing.JPanel();
         AddpatientLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -54,9 +65,10 @@ public class AddPatient extends javax.swing.JFrame {
         Age = new javax.swing.JLabel();
         AgeField = new javax.swing.JTextField();
         Save = new javax.swing.JButton();
+        Remove = new javax.swing.JButton();
         Table = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Patenttable = new javax.swing.JTable();
+        Patienttable = new javax.swing.JTable();
         SortById = new javax.swing.JButton();
         SortByName = new javax.swing.JButton();
 
@@ -140,6 +152,7 @@ public class AddPatient extends javax.swing.JFrame {
         Gender.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         Gender.setText("Gender:");
 
+        buttonGroup1.add(Male);
         Male.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         Male.setText("Male");
         Male.addActionListener(new java.awt.event.ActionListener() {
@@ -148,6 +161,7 @@ public class AddPatient extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(Female);
         Female.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         Female.setText("Female");
 
@@ -184,37 +198,49 @@ public class AddPatient extends javax.swing.JFrame {
             }
         });
 
+        Remove.setText("Remove");
+        Remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PatientpanelLayout = new javax.swing.GroupLayout(Patientpanel);
         Patientpanel.setLayout(PatientpanelLayout);
         PatientpanelLayout.setHorizontalGroup(
             PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PatientpanelLayout.createSequentialGroup()
-                .addGap(123, 123, 123)
+                .addGap(120, 120, 120)
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Contact)
+                    .addComponent(ID)
+                    .addComponent(Gender)
+                    .addComponent(Name)
+                    .addComponent(Age)
+                    .addComponent(Address))
+                .addGap(18, 18, 18)
                 .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Address)
                     .addGroup(PatientpanelLayout.createSequentialGroup()
-                        .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Contact, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Gender, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Name, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Age, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(AgeField, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                        .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(PatientpanelLayout.createSequentialGroup()
+                                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(IDField, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                                        .addComponent(NameField)
+                                        .addGroup(PatientpanelLayout.createSequentialGroup()
+                                            .addComponent(Male, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(Female)))
+                                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addComponent(Save))
+                            .addGroup(PatientpanelLayout.createSequentialGroup()
                                 .addComponent(ContactField)
-                                .addComponent(AddressField))
-                            .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PatientpanelLayout.createSequentialGroup()
-                                .addComponent(Male, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(Female)))
-                        .addGap(34, 34, 34)
-                        .addComponent(Save)))
-                .addContainerGap(143, Short.MAX_VALUE))
+                                .addGap(103, 103, 103)))
+                        .addGap(18, 18, 18)
+                        .addComponent(Remove))
+                    .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         PatientpanelLayout.setVerticalGroup(
             PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,29 +248,33 @@ public class AddPatient extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ID)
-                    .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Name)
-                    .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Gender)
-                    .addComponent(Male)
+                    .addComponent(Male, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Female))
-                .addGap(37, 37, 37)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Contact))
-                .addGap(42, 42, 42)
+                .addGap(35, 35, 35)
                 .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Address))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                    .addComponent(Contact)
+                    .addComponent(ContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PatientpanelLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(Address))
+                    .addGroup(PatientpanelLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Age)
-                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Save))
+                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Save)
+                    .addComponent(Remove))
                 .addGap(66, 66, 66))
         );
 
@@ -252,7 +282,7 @@ public class AddPatient extends javax.swing.JFrame {
 
         Table.setBackground(new java.awt.Color(255, 255, 255));
 
-        Patenttable.setModel(new javax.swing.table.DefaultTableModel(
+        Patienttable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -272,8 +302,8 @@ public class AddPatient extends javax.swing.JFrame {
         // Set column names
         model.setColumnIdentifiers(new Object[]{"ID", "Name", "Gender", "Contact", "Address", "Age"});
 
-        Patenttable.setModel(model);
-        jScrollPane1.setViewportView(Patenttable);
+        Patienttable.setModel(model);
+        jScrollPane1.setViewportView(Patienttable);
 
         javax.swing.GroupLayout TableLayout = new javax.swing.GroupLayout(Table);
         Table.setLayout(TableLayout);
@@ -289,9 +319,24 @@ public class AddPatient extends javax.swing.JFrame {
         Addpatientbg.add(Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 590, 430));
 
         SortById.setText("Sort By Id");
+        SortById.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortByIdActionPerformed(evt);
+            }
+        });
+        SortById.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                SortByIdKeyPressed(evt);
+            }
+        });
         Addpatientbg.add(SortById, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
 
         SortByName.setText("Sort By Name");
+        SortByName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortByNameActionPerformed(evt);
+            }
+        });
         Addpatientbg.add(SortByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 270, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -317,41 +362,75 @@ public class AddPatient extends javax.swing.JFrame {
 
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
-       // Get the table model
-    DefaultTableModel model = (DefaultTableModel) Patenttable.getModel();
-    
-            
-    // Get TEXT from your text fields (not the labels!)
+      // Get values from fields
     String id = IDField.getText().trim();
-    String name = NameField.getText().trim();  // Make sure this is the TEXT FIELD, not the label
+    String name = NameField.getText().trim();
     String age = AgeField.getText().trim();
     String contact = ContactField.getText().trim();
     String address = AddressField.getText().trim();
-    
-    // Get selected gender from radio buttons
+
+    // Get gender
     String gender = "";
     if (Male.isSelected()) {
         gender = "Male";
     } else if (Female.isSelected()) {
         gender = "Female";
     }
-    
-    // Validate that required fields are not empty
-    if (id.isEmpty() || name.isEmpty() || gender.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please fill in all required fields!", 
-                                      "Error", JOptionPane.ERROR_MESSAGE);
+
+    // Validate required fields
+    if (id.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Please fill the ID field", 
+            "Input Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
+    if (name.isEmpty()){
+        JOptionPane.showMessageDialog(this, 
+            "Please fill the Name field", 
+            "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (gender.isEmpty()){
+        JOptionPane.showMessageDialog(this, 
+            "Please fill the Gender field", 
+            "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;}
     
-    // Add a new row to the table with the TEXT values
-    model.addRow(new Object[]{id, name, gender, contact, address, age}); 
-    // Adjust order to match your table columns
+    if (contact.isEmpty() ||contact.length()<9){
+        JOptionPane.showMessageDialog(this, 
+            "Please fill the contact field", 
+            "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;   
+        }
     
-    // Clear the fields after saving
+
+    // Add to the QUEUE using controller 
+    boolean added = controller.enqueuePatient(id, name, gender, contact, address, age);
+
+    if (!added) {
+        if (controller.isQueueFull()) {
+            JOptionPane.showMessageDialog(this, 
+                "Queue is full! Maximum 20 patients allowed.", 
+                "Queue Full", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Patient with this ID already exists in the queue!", 
+                "Duplicate ID", JOptionPane.ERROR_MESSAGE);
+        }
+        return;
+    }
+
+    // === Now refresh the table from the queue (NOT add row directly) ===
+    updatePatient();
+
+    // Clear input fields
     clearFields();
-    
-    JOptionPane.showMessageDialog(this, "Patient added successfully!", 
-                                  "Success", JOptionPane.INFORMATION_MESSAGE);
+
+    // Success message
+    JOptionPane.showMessageDialog(this, 
+        "Patient added successfully to the queue!", 
+        "Success", JOptionPane.INFORMATION_MESSAGE);
+
 
     }//GEN-LAST:event_SaveActionPerformed
 
@@ -405,6 +484,116 @@ public class AddPatient extends javax.swing.JFrame {
         evt.consume();
     }
     }//GEN-LAST:event_AgeFieldKeyTyped
+
+    private void SortByIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SortByIdKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_SortByIdKeyPressed
+
+    private void SortByIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByIdActionPerformed
+        // TODO add your handling code here:
+    if (controller.isQueueEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "No patients to sort!", 
+            "Empty Queue", 
+            JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    
+    // Sort the queue by ID
+    controller.sortQueueById();
+    
+    // Refresh the table
+    updatePatient();
+    
+    JOptionPane.showMessageDialog(this, 
+        "Patients sorted by ID!", 
+        "Sorted", 
+        JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_SortByIdActionPerformed
+
+    private void SortByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByNameActionPerformed
+        // TODO add your handling code here:
+        if (controller.isQueueEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "No patients to sort!", 
+            "Empty Queue", 
+            JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    
+    // Sort the queue by Name
+    controller.sortQueueByName();
+    
+    // Refresh the table
+    updatePatient();
+    
+    JOptionPane.showMessageDialog(this, 
+        "Patients sorted by Name!", 
+        "Sorted", 
+        JOptionPane.INFORMATION_MESSAGE);
+}
+private void RemovePatientActionPerformed(java.awt.event.ActionEvent evt) {
+    String[] patient = controller.dequeuePatient();
+
+    if (patient == null) {
+        JOptionPane.showMessageDialog(this,
+            "No patient in the queue to remove!",
+            "Queue Empty",
+            JOptionPane.WARNING_MESSAGE);
+    } else {
+        String message = "<html><b>Patient Served and Removed:</b><br><br>" +
+                         "ID: " + patient[0] + "<br>" +
+                         "Name: " + patient[1] + "<br>" +
+                         "Gender: " + patient[2] + "<br>" +
+                         "Contact: " + patient[3] + "<br>" +
+                         "Address: " + patient[4] + "<br>" +
+                         "Age: " + patient[5] + "</html>";
+
+        JOptionPane.showMessageDialog(this, message,
+            "Patient Served", JOptionPane.INFORMATION_MESSAGE);
+
+        // ADD THIS LINE - Refresh table after removal
+        updatePatient();
+    }
+    }//GEN-LAST:event_SortByNameActionPerformed
+
+    private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
+        // TODO add your handling code here:
+          // Remove patient from queue
+    String[] patient = controller.dequeuePatient();
+
+    // If queue is empty
+    if (patient == null) {
+        JOptionPane.showMessageDialog(
+            this,
+            "No patient available in the queue!",
+            "Queue Empty",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    // Show removed patient details
+    String message = "<html><b>Patient Served Successfully</b><br><br>"
+            + "ID: " + patient[0] + "<br>"
+            + "Name: " + patient[1] + "<br>"
+            + "Gender: " + patient[2] + "<br>"
+            + "Contact: " + patient[3] + "<br>"
+            + "Address: " + patient[4] + "<br>"
+            + "Age: " + patient[5] + "</html>";
+
+    JOptionPane.showMessageDialog(
+        this,
+        message,
+        "Patient Removed",
+        JOptionPane.INFORMATION_MESSAGE
+    );
+
+    // Refresh table after removal
+    updatePatient();
+    }//GEN-LAST:event_RemoveActionPerformed
     
 
     /**
@@ -451,17 +640,51 @@ public class AddPatient extends javax.swing.JFrame {
     private javax.swing.JRadioButton Male;
     private javax.swing.JLabel Name;
     private javax.swing.JTextField NameField;
-    public javax.swing.JTable Patenttable;
     private javax.swing.JPanel Patientpanel;
+    public javax.swing.JTable Patienttable;
+    private javax.swing.JButton Remove;
     private javax.swing.JButton Save;
     private javax.swing.JButton SortById;
     private javax.swing.JButton SortByName;
     private javax.swing.JPanel Table;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     private void clearFields() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      
+    IDField.setText("");
+    NameField.setText("");
+    AgeField.setText("");
+    ContactField.setText("");
+    AddressField.setText("");
+    buttonGroup1.clearSelection();    
     }
+    private void loadQueueData() {
+    DefaultTableModel model = (DefaultTableModel) Patienttable.getModel();
+    model.setRowCount(0); // Clear table
+    
+    // Get all patients from queue
+    String[][] patients = controller.getAllQueuePatients();
+    
+    // Add each patient to table
+    for (String[] patient : patients) {
+        model.addRow(patient);
+    }
+}
+    private void updatePatient() {
+    DefaultTableModel model = (DefaultTableModel) Patienttable.getModel();
+    model.setRowCount(0); // Clear table
+    
+    // Get all patients from queue
+    String[][] patients = controller.getAllQueuePatients();
+    
+    // Add each patient to table
+    for (String[] patient : patients) {
+        model.addRow(patient);
+    }
+    }
+
+
 }

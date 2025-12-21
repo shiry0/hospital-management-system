@@ -20,20 +20,20 @@ import javax.swing.JTextField;
  *
  * @author upash
  */
-public class LoginPage extends javax.swing.JFrame {
+public class AdminLoginPage extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginPage.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminLoginPage.class.getName());
     private Object LoginKey;
     
     /**
      * Creates new form NewJFrame
      */
-    public LoginPage() {
+    public AdminLoginPage() {
         initComponents();
         
     }
     
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +44,7 @@ public class LoginPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         Userfield = new javax.swing.JTextField();
         Passfield = new javax.swing.JPasswordField();
         LoginpageReg = new javax.swing.JButton();
@@ -55,11 +56,14 @@ public class LoginPage extends javax.swing.JFrame {
         LoginBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1707, 1067));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1707, 1067));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel1.setText("Are you a patient/user?");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 660, -1, -1));
 
         Userfield.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
         Userfield.addActionListener(new java.awt.event.ActionListener() {
@@ -67,14 +71,14 @@ public class LoginPage extends javax.swing.JFrame {
                 UserfieldActionPerformed(evt);
             }
         });
-        jPanel1.add(Userfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 490, 150, -1));
+        jPanel1.add(Userfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 500, 150, -1));
 
         Passfield.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
-        jPanel1.add(Passfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 540, 150, -1));
+        jPanel1.add(Passfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 550, 150, -1));
 
         LoginpageReg.setBackground(new java.awt.Color(0, 51, 255));
         LoginpageReg.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
-        LoginpageReg.setText("Register");
+        LoginpageReg.setText("User login");
         LoginpageReg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginpageReg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -89,7 +93,7 @@ public class LoginPage extends javax.swing.JFrame {
                 LoginpageRegActionPerformed(evt);
             }
         });
-        jPanel1.add(LoginpageReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 640, -1, -1));
+        jPanel1.add(LoginpageReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 650, -1, -1));
 
         LoginpageLog.setBackground(new java.awt.Color(0, 51, 255));
         LoginpageLog.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -108,28 +112,28 @@ public class LoginPage extends javax.swing.JFrame {
                 LoginpageLogActionPerformed(evt);
             }
         });
-        jPanel1.add(LoginpageLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 600, 100, -1));
+        jPanel1.add(LoginpageLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, 120, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 300, 170));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 300, 170));
 
         Pass.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         Pass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Pass.setText("Password:");
-        jPanel1.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, -1, -1));
+        jPanel1.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 550, -1, -1));
 
         Logintxt.setFont(new java.awt.Font("Segoe UI Emoji", 3, 36)); // NOI18N
         Logintxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Logintxt.setText("LOGIN PAGE");
-        jPanel1.add(Logintxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 270, -1));
+        Logintxt.setText("Admin Login");
+        jPanel1.add(Logintxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, 270, -1));
 
         User.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         User.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         User.setText("Username:");
-        jPanel1.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 480, -1, 40));
+        jPanel1.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 490, -1, 40));
 
         LoginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/registerimage.png"))); // NOI18N
-        jPanel1.add(LoginBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -250, -1, -1));
+        jPanel1.add(LoginBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-90, -290, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -180,7 +184,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void LoginpageRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginpageRegActionPerformed
         // TODO add your handling code here:
-        Register register = new Register();
+        UserLogin register = new UserLogin();
         register.setvisible(true);
         this.dispose();
     }//GEN-LAST:event_LoginpageRegActionPerformed
@@ -206,7 +210,7 @@ public class LoginPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new LoginPage().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new AdminLoginPage().setVisible(true));
     }
 
     
@@ -219,6 +223,7 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JPasswordField Passfield;
     private javax.swing.JLabel User;
     private javax.swing.JTextField Userfield;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

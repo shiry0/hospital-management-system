@@ -8,14 +8,14 @@ package View;
  *
  * @author upash
  */
-public class AddMed extends javax.swing.JFrame {
+public class CheckUp extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddMed.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CheckUp.class.getName());
 
     /**
      * Creates new form AddMed
      */
-    public AddMed() {
+    public CheckUp() {
         initComponents();
     }
 
@@ -241,7 +241,7 @@ public class AddMed extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AddMed().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new CheckUp().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

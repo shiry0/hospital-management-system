@@ -4,8 +4,8 @@
  */
 package Controll;
 import View.HomePage;
-import View.LoginPage;
-import View.Register;
+import View.AdminLoginPage;
+import View.UserLogin;
 import Model.Model;
 import Model.Model.allConstants;
 import java.awt.Color;
@@ -15,11 +15,14 @@ import java.awt.Color;
  */
 public class Controll {
 
-    private LoginPage view;
+    
 
-    public Controll(LoginPage view) {
+    private AdminLoginPage view;
+
+    public Controll(AdminLoginPage view) {
         this.view = view;
         initController();
+        
     }
 
     private void initController() {
@@ -42,10 +45,11 @@ public class Controll {
     }
 
     public static void main(String[] args) {
-        LoginPage loginView = new LoginPage();
+        AdminLoginPage loginView = new AdminLoginPage();
         loginView.setVisible(true);
         
     }
-        
+       
+
 }
 

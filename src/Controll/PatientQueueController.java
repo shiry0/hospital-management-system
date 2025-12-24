@@ -1,13 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controll;
-
-/**
- *
- * @author upash
- */
 
 public class PatientQueueController {
 
@@ -100,136 +91,178 @@ public class PatientQueueController {
         return queue[front];
     }
 
-    // ============ FIXED METHODS - Copy arrays properly ============
+    // Get all patients in queue
+    public String[][] getAllQueuePatients() {
+        if (isQueueEmpty()) {
+            return new String[0][6];
+        }
 
-// Get all patients in queue (FIXED - creates copies)
-public String[][] getAllQueuePatients() {
-    if (isQueueEmpty()) {
-        return new String[0][6];
+        int count = getQueueSize();
+        String[][] patients = new String[count][6];
+
+        int index = 0;
+        int i = front;
+
+        while (true) {
+            // Create a NEW array and copy values
+            patients[index] = new String[6];
+            for (int col = 0; col < 6; col++) {
+                patients[index][col] = queue[i][col];
+            }
+            index++;
+            
+            if (i == rear) break;
+            i = (i + 1) % QUEUE_SIZE;
+        }
+
+        return patients;
     }
 
-    int count = getQueueSize();
-    String[][] patients = new String[count][6];
+    // Sort queue by ID (ascending)
+    public void sortQueueById() {
+        if (isQueueEmpty() || getQueueSize() == 1) return;
 
-    int index = 0;
-    int i = front;
+        String[][] patients = getAllQueuePatients();
 
-    while (true) {
-        // Create a NEW array and copy values (CRITICAL FIX)
-        patients[index] = new String[6];
-        for (int col = 0; col < 6; col++) {
-            patients[index][col] = queue[i][col];
+        // Bubble sort by ID
+        for (int i = 0; i < patients.length - 1; i++) {
+            for (int j = 0; j < patients.length - i - 1; j++) {
+                try {
+                    int id1 = Integer.parseInt(patients[j][0]);
+                    int id2 = Integer.parseInt(patients[j + 1][0]);
+
+                    if (id1 > id2) {
+                        String[] temp = patients[j];
+                        patients[j] = patients[j + 1];
+                        patients[j + 1] = temp;
+                    }
+                } catch (NumberFormatException e) {
+                    if (patients[j][0].compareTo(patients[j + 1][0]) > 0) {
+                        String[] temp = patients[j];
+                        patients[j] = patients[j + 1];
+                        patients[j + 1] = temp;
+                    }
+                }
+            }
         }
-        index++;
+
+        rebuildQueueDirect(patients);
+    }
+
+    // Sort queue by Name (ascending)
+    public void sortQueueByName() {
+        if (isQueueEmpty() || getQueueSize() == 1) return;
+
+        String[][] patients = getAllQueuePatients();
+
+        // Bubble sort by Name
+        for (int i = 0; i < patients.length - 1; i++) {
+            for (int j = 0; j < patients.length - i - 1; j++) {
+                if (patients[j][1].compareToIgnoreCase(patients[j + 1][1]) > 0) {
+                    String[] temp = patients[j];
+                    patients[j] = patients[j + 1];
+                    patients[j + 1] = temp;
+                }
+            }
+        }
+
+        rebuildQueueDirect(patients);
+    }
+
+    // Rebuild queue directly
+    private void rebuildQueueDirect(String[][] patients) {
+        // Reset queue
+        front = -1;
+        rear = -1;
         
-        if (i == rear) break;
-        i = (i + 1) % QUEUE_SIZE;
-    }
-
-    return patients;
-}
-
-// Sort queue by ID (ascending)
-public void sortQueueById() {
-    if (isQueueEmpty() || getQueueSize() == 1) return;
-
-    String[][] patients = getAllQueuePatients();
-
-    // Bubble sort by ID
-    for (int i = 0; i < patients.length - 1; i++) {
-        for (int j = 0; j < patients.length - i - 1; j++) {
-            try {
-                int id1 = Integer.parseInt(patients[j][0]);
-                int id2 = Integer.parseInt(patients[j + 1][0]);
-
-                if (id1 > id2) {
-                    String[] temp = patients[j];
-                    patients[j] = patients[j + 1];
-                    patients[j + 1] = temp;
-                }
-            } catch (NumberFormatException e) {
-                if (patients[j][0].compareTo(patients[j + 1][0]) > 0) {
-                    String[] temp = patients[j];
-                    patients[j] = patients[j + 1];
-                    patients[j + 1] = temp;
-                }
+        // Add each patient directly
+        for (String[] patient : patients) {
+            if (front == -1) {
+                front = 0;
             }
+            
+            rear = (rear + 1) % QUEUE_SIZE;
+            
+            // Initialize new array for this slot
+            queue[rear] = new String[6];
+            
+            // Copy each value
+            queue[rear][0] = patient[0];
+            queue[rear][1] = patient[1];
+            queue[rear][2] = patient[2];
+            queue[rear][3] = patient[3];
+            queue[rear][4] = patient[4];
+            queue[rear][5] = patient[5];
         }
-    }
-
-    rebuildQueueDirect(patients);
-}
-
-// Sort queue by Name (ascending)
-public void sortQueueByName() {
-    if (isQueueEmpty() || getQueueSize() == 1) return;
-
-    String[][] patients = getAllQueuePatients();
-
-    // Bubble sort by Name
-    for (int i = 0; i < patients.length - 1; i++) {
-        for (int j = 0; j < patients.length - i - 1; j++) {
-            if (patients[j][1].compareToIgnoreCase(patients[j + 1][1]) > 0) {
-                String[] temp = patients[j];
-                patients[j] = patients[j + 1];
-                patients[j + 1] = temp;
-            }
-        }
-    }
-
-    rebuildQueueDirect(patients);
-}
-
-// Rebuild queue directly (FIXED - copies values, not references)
-private void rebuildQueueDirect(String[][] patients) {
-    // Reset queue
-    front = -1;
-    rear = -1;
+    } 
     
-    // Add each patient directly
-    for (String[] patient : patients) {
-        if (front == -1) {
-            front = 0;
+    public int getQueueSize() {
+        if (isQueueEmpty()) return 0;
+
+        if (rear >= front) {
+            return rear - front + 1;
+        } else {
+            return QUEUE_SIZE - front + rear + 1;
         }
-        
-        rear = (rear + 1) % QUEUE_SIZE;
-        
-        // Initialize new array for this slot (CRITICAL FIX)
-        queue[rear] = new String[6];
-        
-        // Copy each value (not the reference)
-        queue[rear][0] = patient[0];
-        queue[rear][1] = patient[1];
-        queue[rear][2] = patient[2];
-        queue[rear][3] = patient[3];
-        queue[rear][4] = patient[4];
-        queue[rear][5] = patient[5];
     }
-} 
-public int getQueueSize() {
-    if (isQueueEmpty()) return 0;
+    
+    public boolean idExistsInQueue(String id) {
+        if (isQueueEmpty()) return false;
 
-    if (rear >= front) {
-        return rear - front + 1;
-    } else {
-        return QUEUE_SIZE - front + rear + 1;
-    }
-}
-public boolean idExistsInQueue(String id) {
-    if (isQueueEmpty()) return false;
-
-    int i = front;
-    while (true) {
-        if (queue[i][0].equals(id)) {
-            return true;
+        int i = front;
+        while (true) {
+            if (queue[i][0].equals(id)) {
+                return true;
+            }
+            if (i == rear) break;
+            i = (i + 1) % QUEUE_SIZE;
         }
-        if (i == rear) break;
-        i = (i + 1) % QUEUE_SIZE;
+        return false;
     }
-    return false;
+    
+    // ✅ FIXED UPDATE METHOD - No more infinite recursion!
+    public boolean updatePatient(int logicalIndex, String[] patientData) {
+        System.out.println("updatePatient called with index: " + logicalIndex);
+        
+        // Validate input
+        if (patientData[0].isEmpty() || patientData[1].isEmpty() || patientData[2].isEmpty()) {
+            System.out.println("Validation failed: empty required fields");
+            return false;
+        }
+
+        // Validate contact (at least 9 digits)
+        if (patientData[3].length() < 9) {
+            System.out.println("Validation failed: contact too short");
+            return false;
+        }
+
+        // Check if queue is empty
+        if (isQueueEmpty()) {
+            System.out.println("Queue is empty");
+            return false;
+        }
+
+        // Check if index is valid
+        int queueSize = getQueueSize();
+        if (logicalIndex < 0 || logicalIndex >= queueSize) {
+            System.out.println("Invalid index: " + logicalIndex + " (queue size: " + queueSize + ")");
+            return false;
+        }
+
+        // Convert logical index to physical queue index
+        int physicalIndex = (front + logicalIndex) % QUEUE_SIZE;
+        System.out.println("Physical index: " + physicalIndex);
+
+        // Update the patient data at the physical index
+        queue[physicalIndex] = new String[6];
+        queue[physicalIndex][0] = patientData[0];
+        queue[physicalIndex][1] = patientData[1];
+        queue[physicalIndex][2] = patientData[2];
+        queue[physicalIndex][3] = patientData[3];
+        queue[physicalIndex][4] = patientData[4];
+        queue[physicalIndex][5] = patientData[5];
+
+        System.out.println("Patient updated successfully");
+        return true;
+    }
 }
-
-}
-
-
-

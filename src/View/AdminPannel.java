@@ -131,6 +131,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         CheckupPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/check-up.png"))); // NOI18N
         CheckupPic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CheckupPicMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 CheckupPicMouseEntered(evt);
             }
@@ -141,6 +144,9 @@ public class AdminPannel extends javax.swing.JFrame {
         Checkuptxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Checkuptxt.setText("Check up");
         Checkuptxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CheckuptxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 CheckuptxtMouseEntered(evt);
             }
@@ -216,6 +222,9 @@ public class AdminPannel extends javax.swing.JFrame {
         Powerofftxt.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
         Powerofftxt.setText("Power off");
         Powerofftxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PowerofftxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 PowerofftxtMouseEntered(evt);
             }
@@ -224,6 +233,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         Poweroffpic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/turn-off.png"))); // NOI18N
         Poweroffpic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PoweroffpicMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 PoweroffpicMouseEntered(evt);
             }
@@ -310,6 +322,30 @@ public class AdminPannel extends javax.swing.JFrame {
         AddPatient patient = new AddPatient();
         patient.setVisible(true);
     }//GEN-LAST:event_AddtxtMouseClicked
+
+    private void CheckupPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckupPicMouseClicked
+        // TODO add your handling code here:
+        this.dispose(); // Close current window
+    CheckUp checkup = new CheckUp();
+    checkup.setVisible(true);
+    }//GEN-LAST:event_CheckupPicMouseClicked
+
+    private void CheckuptxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckuptxtMouseClicked
+        // TODO add your handling code here:
+        this.dispose(); // Close current window
+    CheckUp checkup = new CheckUp();
+    checkup.setVisible(true);
+    }//GEN-LAST:event_CheckuptxtMouseClicked
+
+    private void PoweroffpicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PoweroffpicMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_PoweroffpicMouseClicked
+
+    private void PowerofftxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PowerofftxtMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_PowerofftxtMouseClicked
 
     /**
      * @param args the command line arguments

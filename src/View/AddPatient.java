@@ -5,10 +5,12 @@
 package View;
 
 import Controll.PatientQueueController;
+import com.sun.jdi.connect.spi.Connection;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import Controll.Navigator;
 
 
 /**
@@ -65,12 +67,13 @@ public class AddPatient extends javax.swing.JFrame {
         Age = new javax.swing.JLabel();
         AgeField = new javax.swing.JTextField();
         Save = new javax.swing.JButton();
-        Remove = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
         Table = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Patienttable = new javax.swing.JTable();
         SortById = new javax.swing.JButton();
         SortByName = new javax.swing.JButton();
+        Remove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1707, 1067));
@@ -198,10 +201,10 @@ public class AddPatient extends javax.swing.JFrame {
             }
         });
 
-        Remove.setText("Remove");
-        Remove.addActionListener(new java.awt.event.ActionListener() {
+        Update.setText("Update");
+        Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RemoveActionPerformed(evt);
+                UpdateActionPerformed(evt);
             }
         });
 
@@ -238,9 +241,9 @@ public class AddPatient extends javax.swing.JFrame {
                                 .addComponent(ContactField)
                                 .addGap(103, 103, 103)))
                         .addGap(18, 18, 18)
-                        .addComponent(Remove))
+                        .addComponent(Update))
                     .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         PatientpanelLayout.setVerticalGroup(
             PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +277,7 @@ public class AddPatient extends javax.swing.JFrame {
                     .addComponent(Age)
                     .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Save)
-                    .addComponent(Remove))
+                    .addComponent(Update))
                 .addGap(66, 66, 66))
         );
 
@@ -303,6 +306,11 @@ public class AddPatient extends javax.swing.JFrame {
         model.setColumnIdentifiers(new Object[]{"ID", "Name", "Gender", "Contact", "Address", "Age"});
 
         Patienttable.setModel(model);
+        Patienttable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PatienttableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Patienttable);
 
         javax.swing.GroupLayout TableLayout = new javax.swing.GroupLayout(Table);
@@ -339,6 +347,14 @@ public class AddPatient extends javax.swing.JFrame {
         });
         Addpatientbg.add(SortByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 270, -1, -1));
 
+        Remove.setText("Remove");
+        Remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveActionPerformed(evt);
+            }
+        });
+        Addpatientbg.add(Remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 270, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -370,11 +386,11 @@ public class AddPatient extends javax.swing.JFrame {
     String address = AddressField.getText().trim();
 
     // Get gender
-    String gender = "";
+    String Gender = "";
     if (Male.isSelected()) {
-        gender = "Male";
+        Gender = "Male";
     } else if (Female.isSelected()) {
-        gender = "Female";
+        Gender = "Female";
     }
 
     // Validate required fields
@@ -390,7 +406,7 @@ public class AddPatient extends javax.swing.JFrame {
             "Input Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-    if (gender.isEmpty()){
+    if (Gender.isEmpty()){
         JOptionPane.showMessageDialog(this, 
             "Please fill the Gender field", 
             "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -405,7 +421,7 @@ public class AddPatient extends javax.swing.JFrame {
     
 
     // Add to the QUEUE using controller 
-    boolean added = controller.enqueuePatient(id, name, gender, contact, address, age);
+    boolean added = controller.enqueuePatient(id, name, Gender, contact, address, age);
 
     if (!added) {
         if (controller.isQueueFull()) {
@@ -464,9 +480,7 @@ public class AddPatient extends javax.swing.JFrame {
 
     private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        AdminPannel panel = new AdminPannel();
-        panel.setVisible(true);
+        Navigator.showAdminPanel();
     }//GEN-LAST:event_HomeActionPerformed
 
     private void NameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NameFieldKeyTyped
@@ -594,6 +608,120 @@ private void RemovePatientActionPerformed(java.awt.event.ActionEvent evt) {
     // Refresh table after removal
     updatePatient();
     }//GEN-LAST:event_RemoveActionPerformed
+
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+          // 1️⃣ Check if row selected
+     int row = Patienttable.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Please select a patient to update!",
+            "No Selection",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+    
+    // 2️⃣ Get ID from the field (locked, so it's the original)
+    String id = IDField.getText().trim();
+    
+    // 3️⃣ Get updated values from fields
+    String name = NameField.getText().trim();
+    String contact = ContactField.getText().trim();
+    String address = AddressField.getText().trim();
+    String age = AgeField.getText().trim();
+    String gender = "";
+    if (Male.isSelected()) gender = "Male";
+    else if (Female.isSelected()) gender = "Female";
+    
+    // 4️⃣ Validation
+    if (name.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Name is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        NameField.requestFocus();
+        return;
+    }
+    if (gender.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select gender!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (age.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Age is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        AgeField.requestFocus();
+        return;
+    }
+    if (address.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Address is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        AddressField.requestFocus();
+        return;
+    }
+    if (contact.length() < 9) {
+        JOptionPane.showMessageDialog(this, "Contact must be at least 9 digits!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        ContactField.requestFocus();
+        return;
+    }
+    
+    // 5️⃣ Update CONTROLLER (queue) - Include the ID!
+    boolean updated = controller.updatePatient(
+        row,
+        new String[]{id, name, gender, contact, address, age}  // ✅ ID included
+    );
+    
+    if (!updated) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Update failed! Please try again.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+        return;
+    }
+    
+    // 6️⃣ Refresh table
+    updatePatient();
+    
+    // 7️⃣ Reset form
+    clearFields();
+    IDField.setEditable(true);
+    
+    JOptionPane.showMessageDialog(
+        this,
+        "Patient updated successfully!",
+        "Success",
+        JOptionPane.INFORMATION_MESSAGE
+    );                                 
+    
+
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void PatienttableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatienttableMouseClicked
+        // TODO add your handling code here:
+    
+    int row = Patienttable.getSelectedRow();
+    if (row == -1) return;
+    
+    DefaultTableModel model = (DefaultTableModel) Patienttable.getModel();
+    
+    IDField.setText(model.getValueAt(row, 0).toString());
+    NameField.setText(model.getValueAt(row, 1).toString());
+    GenderFromTable(model.getValueAt(row, 2).toString());
+    ContactField.setText(model.getValueAt(row, 3).toString());
+    AddressField.setText(model.getValueAt(row, 4).toString());
+    AgeField.setText(model.getValueAt(row, 5).toString());
+    
+    // 🔒 Lock ID field (important - prevents changing primary key)
+    IDField.setEditable(false);
+}
+
+private void GenderFromTable(String gender) {
+    if (gender.equalsIgnoreCase("Male")) {
+        Male.setSelected(true);
+        Female.setSelected(false);
+    } else if (gender.equalsIgnoreCase("Female")) {
+        Female.setSelected(true);
+        Male.setSelected(false);
+    }
+    
+    }//GEN-LAST:event_PatienttableMouseClicked
     
 
     /**
@@ -647,6 +775,7 @@ private void RemovePatientActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JButton SortById;
     private javax.swing.JButton SortByName;
     private javax.swing.JPanel Table;
+    private javax.swing.JButton Update;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -685,6 +814,5 @@ private void RemovePatientActionPerformed(java.awt.event.ActionEvent evt) {
         model.addRow(patient);
     }
     }
-
-
 }
+

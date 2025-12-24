@@ -185,7 +185,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
     private void LoginpageRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginpageRegActionPerformed
         // TODO add your handling code here:
         UserLogin register = new UserLogin();
-        register.setvisible(true);
+        register.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_LoginpageRegActionPerformed
     /**

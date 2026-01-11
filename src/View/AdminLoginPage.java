@@ -172,7 +172,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
       if(password.equals(LOGIN_KEY) && username.equals(USER_KEY)) {
     // Password is correct
     javax.swing.JOptionPane.showMessageDialog(this, "Login successful!");
-    // Optionally open your HomePage:
+    this.dispose();
     AdminPannel admin = new AdminPannel();
     admin.setVisible(true);
      // close login page
@@ -210,8 +210,10 @@ public class AdminLoginPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AdminLoginPage().setVisible(true));
+        AdminLoginPage login = new AdminLoginPage();
+        login.setVisible(true);
     }
+    
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

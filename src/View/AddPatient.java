@@ -1,41 +1,41 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package View;
-
-import Controll.PatientQueueController;
-import com.sun.jdi.connect.spi.Connection;
-import java.util.LinkedList;
-import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
+import Controll.Controll;
 import Controll.Navigator;
-
+import Controll.PatientQueueController;
+import Model.Model;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import Controll.DeletedPatient;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author upash
  */
-public class AddPatient extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddPatient.class.getName());
-   private PatientQueueController controller;
-    
-    
-   
+public class AddPatient extends javax.swing.JPanel {
+
+    /**
+     * Creates new form NewJPanel
+     */
+        public AddPatient() {
+        initComponents();
+        setupTable();
+        loadPatientsToTable();
+        PatientQueueController queue = PatientQueueController.getInstance();
+        if (queue.isQueueEmpty()) {
+            queue.addDummyPatients();
+        }
+
+        jTextField1.setText("Enter ID:");
+    jTextField1.setForeground(java.awt.Color.GRAY);
+    }
 
     
-    /**
-     * Creates new form AddPatient
-     */
-    public AddPatient() {
-        initComponents();
-        controller = PatientQueueController.getInstance();
-        loadQueueData();
-        
-    }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,158 +46,97 @@ public class AddPatient extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        Addpatientbg = new javax.swing.JPanel();
-        AddpatientLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        AddPatientPanel = new javax.swing.JPanel();
-        Addpatientxt = new javax.swing.JLabel();
-        Home = new javax.swing.JButton();
-        Patientpanel = new javax.swing.JPanel();
-        ID = new javax.swing.JLabel();
-        IDField = new javax.swing.JTextField();
-        Name = new javax.swing.JLabel();
-        NameField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        AddPatientForm = new javax.swing.JPanel();
+        Id = new javax.swing.JLabel();
+        IdField = new javax.swing.JTextField();
         Gender = new javax.swing.JLabel();
-        Male = new javax.swing.JRadioButton();
-        Female = new javax.swing.JRadioButton();
-        Contact = new javax.swing.JLabel();
+        NameField = new javax.swing.JTextField();
+        AgeField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        Age = new javax.swing.JLabel();
         ContactField = new javax.swing.JTextField();
         Address = new javax.swing.JLabel();
         AddressField = new javax.swing.JTextField();
-        Age = new javax.swing.JLabel();
-        AgeField = new javax.swing.JTextField();
-        Save = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        Name = new javax.swing.JLabel();
+        SaveButton = new javax.swing.JButton();
         Update = new javax.swing.JButton();
-        Table = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Patienttable = new javax.swing.JTable();
-        SortById = new javax.swing.JButton();
-        SortByName = new javax.swing.JButton();
         Remove = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        PatientTable = new javax.swing.JTable();
+        SortById = new javax.swing.JButton();
+        ShortByName = new javax.swing.JButton();
+        Home = new javax.swing.JButton();
+        Search = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1707, 1067));
+        setBackground(new java.awt.Color(219, 245, 244));
+        setPreferredSize(new java.awt.Dimension(1707, 1067));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Addpatientbg.setBackground(new java.awt.Color(219, 245, 241));
-        Addpatientbg.setMinimumSize(new java.awt.Dimension(1707, 1067));
-        Addpatientbg.setPreferredSize(new java.awt.Dimension(1707, 1067));
-        Addpatientbg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        AddpatientLogo.setBackground(new java.awt.Color(219, 245, 241));
-        AddpatientLogo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
-        AddpatientLogo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 22, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        Addpatientbg.add(AddpatientLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 36)); // NOI18N
+        jLabel2.setText("Add Patient");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 80, -1, -1));
 
-        AddPatientPanel.setBackground(new java.awt.Color(219, 245, 241));
+        Id.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        Id.setText("ID:");
 
-        Addpatientxt.setFont(new java.awt.Font("Segoe UI Emoji", 1, 36)); // NOI18N
-        Addpatientxt.setText("Add Patients");
-
-        Home.setText("Home");
-        Home.addActionListener(new java.awt.event.ActionListener() {
+        IdField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        IdField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HomeActionPerformed(evt);
+                IdFieldActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout AddPatientPanelLayout = new javax.swing.GroupLayout(AddPatientPanel);
-        AddPatientPanel.setLayout(AddPatientPanelLayout);
-        AddPatientPanelLayout.setHorizontalGroup(
-            AddPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AddPatientPanelLayout.createSequentialGroup()
-                .addGap(696, 696, 696)
-                .addComponent(Addpatientxt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
-                .addComponent(Home)
-                .addGap(286, 286, 286))
-        );
-        AddPatientPanelLayout.setVerticalGroup(
-            AddPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddPatientPanelLayout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
-                .addGroup(AddPatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Home)
-                    .addComponent(Addpatientxt))
-                .addGap(18, 18, 18))
-        );
-
-        Addpatientbg.add(AddPatientPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 0, 1700, 150));
-
-        Patientpanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        ID.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        ID.setText("ID:");
-
-        IDField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IDFieldActionPerformed(evt);
-            }
-        });
-        IDField.addKeyListener(new java.awt.event.KeyAdapter() {
+        IdField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                IDFieldKeyTyped(evt);
+                IdFieldKeyTyped(evt);
             }
         });
 
-        Name.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Name.setText("Name:");
-
-        NameField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                NameFieldKeyTyped(evt);
-            }
-        });
-
-        Gender.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Gender.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         Gender.setText("Gender:");
 
-        buttonGroup1.add(Male);
-        Male.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        Male.setText("Male");
-        Male.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MaleActionPerformed(evt);
-            }
-        });
+        NameField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        buttonGroup1.add(Female);
-        Female.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        Female.setText("Female");
-
-        Contact.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Contact.setText("Contact:");
-
-        ContactField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContactFieldActionPerformed(evt);
-            }
-        });
-        ContactField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                ContactFieldKeyTyped(evt);
-            }
-        });
-
-        Address.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Address.setText("Address:");
-
-        Age.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Age.setText("Age:");
-
+        AgeField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         AgeField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 AgeFieldKeyTyped(evt);
             }
         });
 
-        Save.setText("Save");
-        Save.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        jLabel6.setText("Contact:");
+
+        Age.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        Age.setText("Age:");
+
+        ContactField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        Address.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        Address.setText("Address:");
+
+        AddressField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("Male");
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Female");
+
+        Name.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        Name.setText("Name:");
+
+        SaveButton.setText("Save");
+        SaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveActionPerformed(evt);
+                SaveButtonActionPerformed(evt);
             }
         });
 
@@ -208,611 +147,560 @@ public class AddPatient extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PatientpanelLayout = new javax.swing.GroupLayout(Patientpanel);
-        Patientpanel.setLayout(PatientpanelLayout);
-        PatientpanelLayout.setHorizontalGroup(
-            PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PatientpanelLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Contact)
-                    .addComponent(ID)
-                    .addComponent(Gender)
-                    .addComponent(Name)
-                    .addComponent(Age)
-                    .addComponent(Address))
-                .addGap(18, 18, 18)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PatientpanelLayout.createSequentialGroup()
-                        .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(PatientpanelLayout.createSequentialGroup()
-                                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(IDField, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-                                        .addComponent(NameField)
-                                        .addGroup(PatientpanelLayout.createSequentialGroup()
-                                            .addComponent(Male, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(Female)))
-                                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(34, 34, 34)
-                                .addComponent(Save))
-                            .addGroup(PatientpanelLayout.createSequentialGroup()
-                                .addComponent(ContactField)
-                                .addGap(103, 103, 103)))
-                        .addGap(18, 18, 18)
-                        .addComponent(Update))
-                    .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
-        );
-        PatientpanelLayout.setVerticalGroup(
-            PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PatientpanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ID)
-                    .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Name)
-                    .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Gender)
-                    .addComponent(Male, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Female))
-                .addGap(35, 35, 35)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Contact)
-                    .addComponent(ContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PatientpanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(Address))
-                    .addGroup(PatientpanelLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(PatientpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Age)
-                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Save)
-                    .addComponent(Update))
-                .addGap(66, 66, 66))
-        );
-
-        Addpatientbg.add(Patientpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 720, 490));
-
-        Table.setBackground(new java.awt.Color(255, 255, 255));
-
-        Patienttable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Name", "Age", "Contact", "Gender", "Address"
-            }
-        ));
-        DefaultTableModel model = new DefaultTableModel() {
-            //making cells uneditable
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        // Set column names
-        model.setColumnIdentifiers(new Object[]{"ID", "Name", "Gender", "Contact", "Address", "Age"});
-
-        Patienttable.setModel(model);
-        Patienttable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PatienttableMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(Patienttable);
-
-        javax.swing.GroupLayout TableLayout = new javax.swing.GroupLayout(Table);
-        Table.setLayout(TableLayout);
-        TableLayout.setHorizontalGroup(
-            TableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
-        );
-        TableLayout.setVerticalGroup(
-            TableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-        );
-
-        Addpatientbg.add(Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 590, 430));
-
-        SortById.setText("Sort By Id");
-        SortById.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SortByIdActionPerformed(evt);
-            }
-        });
-        SortById.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                SortByIdKeyPressed(evt);
-            }
-        });
-        Addpatientbg.add(SortById, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
-
-        SortByName.setText("Sort By Name");
-        SortByName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SortByNameActionPerformed(evt);
-            }
-        });
-        Addpatientbg.add(SortByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 270, -1, -1));
-
         Remove.setText("Remove");
         Remove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RemoveActionPerformed(evt);
             }
         });
-        Addpatientbg.add(Remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 270, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Addpatientbg, javax.swing.GroupLayout.PREFERRED_SIZE, 1713, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+        javax.swing.GroupLayout AddPatientFormLayout = new javax.swing.GroupLayout(AddPatientForm);
+        AddPatientForm.setLayout(AddPatientFormLayout);
+        AddPatientFormLayout.setHorizontalGroup(
+            AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddPatientFormLayout.createSequentialGroup()
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddPatientFormLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(Id)
+                        .addGap(18, 18, 18)
+                        .addComponent(IdField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(AddPatientFormLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Gender)
+                            .addComponent(Name))
+                        .addGap(18, 18, 18)
+                        .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2)))
+                    .addGroup(AddPatientFormLayout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Age)
+                            .addComponent(jLabel6)
+                            .addComponent(Address))
+                        .addGap(18, 18, 18)
+                        .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(AddPatientFormLayout.createSequentialGroup()
+                                .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(SaveButton)
+                                .addGap(18, 18, 18)
+                                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Remove)
+                                    .addComponent(Update))))))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Addpatientbg, javax.swing.GroupLayout.PREFERRED_SIZE, 1073, javax.swing.GroupLayout.PREFERRED_SIZE)
+        AddPatientFormLayout.setVerticalGroup(
+            AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddPatientFormLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Id)
+                    .addComponent(IdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Name))
+                .addGap(45, 45, 45)
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(Gender))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(ContactField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Age)
+                    .addComponent(AgeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(AddPatientFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Address)
+                    .addComponent(AddressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SaveButton)
+                    .addComponent(Update))
+                .addGap(29, 29, 29)
+                .addComponent(Remove)
+                .addGap(16, 16, 16))
         );
 
-        pack();
+        add(AddPatientForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 670, 500));
+
+        PatientTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Gender", "Contact", "Age", "Address"
+            }
+        ));
+        PatientTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PatientTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(PatientTable);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 610, 500));
+
+        SortById.setText("Sort by ID");
+        SortById.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortByIdActionPerformed(evt);
+            }
+        });
+        add(SortById, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, -1, -1));
+
+        ShortByName.setText("Sort by Name");
+        ShortByName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShortByNameActionPerformed(evt);
+            }
+        });
+        add(ShortByName, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 260, -1, -1));
+
+        Home.setText("Home");
+        Home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HomeActionPerformed(evt);
+            }
+        });
+        add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 260, -1, -1));
+
+        Search.setText("Search");
+        add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 260, -1, -1));
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 260, 130, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void IDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDFieldActionPerformed
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        // TODO add your handling code here:                                          
+        savePatient();   
+    }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void IdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdFieldActionPerformed
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_IDFieldActionPerformed
+    }//GEN-LAST:event_IdFieldActionPerformed
 
-    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+    private void IdFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IdFieldKeyTyped
         // TODO add your handling code here:
-      // Get values from fields
-    String id = IDField.getText().trim();
-    String name = NameField.getText().trim();
-    String age = AgeField.getText().trim();
-    String contact = ContactField.getText().trim();
-    String address = AddressField.getText().trim();
-
-    // Get gender
-    String Gender = "";
-    if (Male.isSelected()) {
-        Gender = "Male";
-    } else if (Female.isSelected()) {
-        Gender = "Female";
-    }
-
-    // Validate required fields
-    if (id.isEmpty()) {
-        JOptionPane.showMessageDialog(this, 
-            "Please fill the ID field", 
-            "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (name.isEmpty()){
-        JOptionPane.showMessageDialog(this, 
-            "Please fill the Name field", 
-            "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (Gender.isEmpty()){
-        JOptionPane.showMessageDialog(this, 
-            "Please fill the Gender field", 
-            "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;}
-    
-    if (contact.isEmpty() ||contact.length()<9){
-        JOptionPane.showMessageDialog(this, 
-            "Please fill the contact field", 
-            "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;   
+        char c = evt.getKeyChar();
+        
+        // Allow only digits (0-9)
+        if (!Character.isDigit(c)) {
+            evt.consume();  // Block the character
         }
-    
+        
+        // Optional: Block if already too long (e.g., max 6 digits for ID)
+        if (IdField.getText().length() >= 6) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_IdFieldKeyTyped
 
-    // Add to the QUEUE using controller 
-    boolean added = controller.enqueuePatient(id, name, Gender, contact, address, age);
+    private void AgeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AgeFieldKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+        
+        // Optional: Max 3 digits for age (1-150)
+        if (AgeField.getText().length() >= 3) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_AgeFieldKeyTyped
 
-    if (!added) {
-        if (controller.isQueueFull()) {
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = PatientTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a patient to update!", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String id = IdField.getText().trim();
+        String name = NameField.getText().trim();
+        String gender = getSelectedGender();
+        String contact = ContactField.getText().trim();
+        String ageText = AgeField.getText().trim();
+        String address = AddressField.getText().trim();
+
+        // Validation (same as save)
+        if (name.isEmpty() || gender.isEmpty() || contact.isEmpty() || 
+            ageText.isEmpty() || address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Contact validation
+        if (!contact.matches("\\d{10,15}")) {
             JOptionPane.showMessageDialog(this, 
-                "Queue is full! Maximum 20 patients allowed.", 
-                "Queue Full", JOptionPane.ERROR_MESSAGE);
+                "Invalid contact number!\nMust be 10 digits only.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int age = Integer.parseInt(ageText);
+            if (age <= 0 || age > 150) {
+                JOptionPane.showMessageDialog(this, "Age must be between 1 and 150!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Prepare updated data array
+            String[] updatedData = new String[]{
+                id, name, gender, contact, address, String.valueOf(age)
+            };
+
+            // Update in queue (logical index = selectedRow)
+            PatientQueueController queue = PatientQueueController.getInstance();
+            boolean updated = queue.updatePatient(selectedRow, updatedData);
+
+            if (updated) {
+                JOptionPane.showMessageDialog(this, "Patient updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                // Refresh table to show changes
+                loadPatientsToTable();
+
+                // Clear selection and form
+                PatientTable.clearSelection();
+                clearForm(); // Call your clear method or manually clear
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update patient!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Age must be a valid number!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void PatientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientTableMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = PatientTable.getSelectedRow();
+        if (selectedRow == -1) return; // No row selected
+
+        // Get data from selected row
+        String id = tableModel.getValueAt(selectedRow, 0).toString();
+        String name = tableModel.getValueAt(selectedRow, 1).toString();
+        String gender = tableModel.getValueAt(selectedRow, 2).toString();
+        String contact = tableModel.getValueAt(selectedRow, 3).toString();
+        String age = tableModel.getValueAt(selectedRow, 4).toString();
+        String address = tableModel.getValueAt(selectedRow, 5).toString();
+
+        // Fill form
+        IdField.setText(id);
+        NameField.setText(name);
+        ContactField.setText(contact);
+        AgeField.setText(age);
+        AddressField.setText(address);
+
+        // Set gender radio buttons
+        if (gender.equals("Male")) {
+            jRadioButton1.setSelected(true);
+            jRadioButton2.setSelected(false);
+        } else if (gender.equals("Female")) {
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(true);
         } else {
-            JOptionPane.showMessageDialog(this, 
-                "Patient with this ID already exists in the queue!", 
-                "Duplicate ID", JOptionPane.ERROR_MESSAGE);
+            buttonGroup1.clearSelection();
         }
-        return;
-    }
 
-    // === Now refresh the table from the queue (NOT add row directly) ===
-    updatePatient();
+        // Optional: make ID field non-editable during update
+        IdField.setEditable(false);
+    }//GEN-LAST:event_PatientTableMouseClicked
 
-    // Clear input fields
-    clearFields();
-
-    // Success message
-    JOptionPane.showMessageDialog(this, 
-        "Patient added successfully to the queue!", 
-        "Success", JOptionPane.INFORMATION_MESSAGE);
-
-
-    }//GEN-LAST:event_SaveActionPerformed
-
-    private void MaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaleActionPerformed
+    private void SortByIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MaleActionPerformed
+        // Get the queue controller instance
+        PatientQueueController queue = PatientQueueController.getInstance();
+        
+        // Sort the queue by ID (ascending)
+        queue.sortQueueById();
+        
+        // Refresh the table to show the sorted order
+        loadPatientsToTable();
+    }//GEN-LAST:event_SortByIdActionPerformed
 
-    private void ContactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactFieldActionPerformed
+    private void ShortByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShortByNameActionPerformed
         // TODO add your handling code here:
-            
-    }//GEN-LAST:event_ContactFieldActionPerformed
+        PatientQueueController queue = PatientQueueController.getInstance();
+        queue.sortQueueByName();
+        loadPatientsToTable();
+    }//GEN-LAST:event_ShortByNameActionPerformed
 
-    private void ContactFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ContactFieldKeyTyped
-                                          
+    private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
         // TODO add your handling code here:
-            char c = evt.getKeyChar();
-    if (!Character.isDigit(c)) {
-        evt.consume();
-     
-    }
-    }//GEN-LAST:event_ContactFieldKeyTyped
+        String idText = IdField.getText().trim();
 
-    private void IDFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDFieldKeyTyped
-        // TODO add your handling code here:
-         char c = evt.getKeyChar();
-    if (!Character.isDigit(c)) {
-        evt.consume();
-     
-    }
-    }//GEN-LAST:event_IDFieldKeyTyped
+        // Check if ID field is empty
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an ID to remove!", "No ID", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int id;
+        try {
+            id = Integer.parseInt(idText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID must be a valid number!", "Invalid ID", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        PatientQueueController queue = PatientQueueController.getInstance();
+
+        // Get current queue patients
+        String[][] patients = queue.getAllQueuePatients();
+
+        // Find the logical index of the patient with matching ID
+        int targetIndex = -1;
+        for (int i = 0; i < patients.length; i++) {
+            if (Integer.parseInt(patients[i][0]) == id) {
+                targetIndex = i;
+                break;
+            }
+        }
+
+        // If not found
+        if (targetIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Patient with ID " + id + " not found in queue!", "Not Found", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Remove by dequeuing all patients before the target, then skip the target, then re-enqueue the rest
+        // Temporary storage
+        java.util.List<String[]> remainingPatients = new java.util.ArrayList<>();
+
+        for (int i = 0; i < patients.length; i++) {
+            if (i != targetIndex) {
+                remainingPatients.add(patients[i]);
+            }
+        }
+
+        // Rebuild queue with remaining patients
+        queue = PatientQueueController.getInstance(); // Re-get instance
+        // Clear queue by resetting front/rear (private fields, so we rebuild)
+        // We'll use a fresh queue rebuild
+        // Since we can't directly remove from middle, we rebuild
+        // Reset queue indirectly by creating new data and rebuilding
+        // But easiest: dequeue all, skip the one to remove, re-enqueue others
+
+        // Better way: dequeue all patients, skip the one with matching ID, re-enqueue the rest
+        int queueSize = queue.getQueueSize();
+        java.util.List<String[]> keptPatients = new java.util.ArrayList<>();
+
+        for (int i = 0; i < queueSize; i++) {
+            String[] p = queue.dequeuePatient();
+            if (p != null && Integer.parseInt(p[0]) != id) {
+                keptPatients.add(p);
+            }
+        }
+
+        // Re-enqueue kept patients
+        for (String[] p : keptPatients) {
+            queue.enqueuePatient(p[0], p[1], p[2], p[3], p[4], p[5]);
+        }
+
+        JOptionPane.showMessageDialog(this, "Patient with ID " + id + " removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        // Clear the ID field and refresh table
+        IdField.setText("");
+        loadPatientsToTable();
+        PatientTable.clearSelection();
+        int row = PatientTable.getSelectedRow();
+        if (row == -1) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Select a patient to delete!");
+    return;
+}
+
+DefaultTableModel model = (DefaultTableModel) PatientTable.getModel();
+
+// adjust indexes to match your table columns
+String patientId = model.getValueAt(row, 0).toString();
+String patientName = model.getValueAt(row, 1).toString();
+
+//  log deleted patient
+DeletedPatient.getInstance().add(patientId, patientName);
+
+//  now delete from table/store
+model.removeRow(row);
+
+    }//GEN-LAST:event_RemoveActionPerformed
 
     private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
         // TODO add your handling code here:
         Navigator.showAdminPanel();
     }//GEN-LAST:event_HomeActionPerformed
 
-    private void NameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NameFieldKeyTyped
-        // TODO add your handling code here:
-         char c = evt.getKeyChar();
-    if (Character.isDigit(c)) {
-        evt.consume();
-    }
-    }//GEN-LAST:event_NameFieldKeyTyped
-
-    private void AgeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AgeFieldKeyTyped
-        // TODO add your handling code here:
-        char c = evt.getKeyChar();
-    if (!Character.isDigit(c)) {
-        evt.consume();
-    }
-    }//GEN-LAST:event_AgeFieldKeyTyped
-
-    private void SortByIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SortByIdKeyPressed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_SortByIdKeyPressed
+    
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void SortByIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByIdActionPerformed
-        // TODO add your handling code here:
-    if (controller.isQueueEmpty()) {
-        JOptionPane.showMessageDialog(this, 
-            "No patients to sort!", 
-            "Empty Queue", 
-            JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-    
-    // Sort the queue by ID
-    controller.sortQueueById();
-    
-    // Refresh the table
-    updatePatient();
-    
-    JOptionPane.showMessageDialog(this, 
-        "Patients sorted by ID!", 
-        "Sorted", 
-        JOptionPane.INFORMATION_MESSAGE);
-
-    }//GEN-LAST:event_SortByIdActionPerformed
-
-    private void SortByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByNameActionPerformed
-        // TODO add your handling code here:
-        if (controller.isQueueEmpty()) {
-        JOptionPane.showMessageDialog(this, 
-            "No patients to sort!", 
-            "Empty Queue", 
-            JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-    
-    // Sort the queue by Name
-    controller.sortQueueByName();
-    
-    // Refresh the table
-    updatePatient();
-    
-    JOptionPane.showMessageDialog(this, 
-        "Patients sorted by Name!", 
-        "Sorted", 
-        JOptionPane.INFORMATION_MESSAGE);
-}
-private void RemovePatientActionPerformed(java.awt.event.ActionEvent evt) {
-    String[] patient = controller.dequeuePatient();
-
-    if (patient == null) {
-        JOptionPane.showMessageDialog(this,
-            "No patient in the queue to remove!",
-            "Queue Empty",
-            JOptionPane.WARNING_MESSAGE);
-    } else {
-        String message = "<html><b>Patient Served and Removed:</b><br><br>" +
-                         "ID: " + patient[0] + "<br>" +
-                         "Name: " + patient[1] + "<br>" +
-                         "Gender: " + patient[2] + "<br>" +
-                         "Contact: " + patient[3] + "<br>" +
-                         "Address: " + patient[4] + "<br>" +
-                         "Age: " + patient[5] + "</html>";
-
-        JOptionPane.showMessageDialog(this, message,
-            "Patient Served", JOptionPane.INFORMATION_MESSAGE);
-
-        // ADD THIS LINE - Refresh table after removal
-        updatePatient();
-    }
-    }//GEN-LAST:event_SortByNameActionPerformed
-
-    private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
-        // TODO add your handling code here:
-          // Remove patient from queue
-    String[] patient = controller.dequeuePatient();
-
-    // If queue is empty
-    if (patient == null) {
-        JOptionPane.showMessageDialog(
-            this,
-            "No patient available in the queue!",
-            "Queue Empty",
-            JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
-
-    // Show removed patient details
-    String message = "<html><b>Patient Served Successfully</b><br><br>"
-            + "ID: " + patient[0] + "<br>"
-            + "Name: " + patient[1] + "<br>"
-            + "Gender: " + patient[2] + "<br>"
-            + "Contact: " + patient[3] + "<br>"
-            + "Address: " + patient[4] + "<br>"
-            + "Age: " + patient[5] + "</html>";
-
-    JOptionPane.showMessageDialog(
-        this,
-        message,
-        "Patient Removed",
-        JOptionPane.INFORMATION_MESSAGE
-    );
-
-    // Refresh table after removal
-    updatePatient();
-    }//GEN-LAST:event_RemoveActionPerformed
-
-    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
-          // 1️⃣ Check if row selected
-     int row = Patienttable.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Please select a patient to update!",
-            "No Selection",
-            JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
-    
-    // 2️⃣ Get ID from the field (locked, so it's the original)
-    String id = IDField.getText().trim();
-    
-    // 3️⃣ Get updated values from fields
-    String name = NameField.getText().trim();
-    String contact = ContactField.getText().trim();
-    String address = AddressField.getText().trim();
-    String age = AgeField.getText().trim();
-    String gender = "";
-    if (Male.isSelected()) gender = "Male";
-    else if (Female.isSelected()) gender = "Female";
-    
-    // 4️⃣ Validation
-    if (name.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Name is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        NameField.requestFocus();
-        return;
-    }
-    if (gender.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please select gender!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (age.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Age is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        AgeField.requestFocus();
-        return;
-    }
-    if (address.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Address is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        AddressField.requestFocus();
-        return;
-    }
-    if (contact.length() < 9) {
-        JOptionPane.showMessageDialog(this, "Contact must be at least 9 digits!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        ContactField.requestFocus();
-        return;
-    }
-    
-    // 5️⃣ Update CONTROLLER (queue) - Include the ID!
-    boolean updated = controller.updatePatient(
-        row,
-        new String[]{id, name, gender, contact, address, age}  // ✅ ID included
-    );
-    
-    if (!updated) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Update failed! Please try again.",
-            "Error",
-            JOptionPane.ERROR_MESSAGE
-        );
-        return;
-    }
-    
-    // 6️⃣ Refresh table
-    updatePatient();
-    
-    // 7️⃣ Reset form
-    clearFields();
-    IDField.setEditable(true);
-    
-    JOptionPane.showMessageDialog(
-        this,
-        "Patient updated successfully!",
-        "Success",
-        JOptionPane.INFORMATION_MESSAGE
-    );                                 
-    
-
-    }//GEN-LAST:event_UpdateActionPerformed
-
-    private void PatienttableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatienttableMouseClicked
-        // TODO add your handling code here:
-    
-    int row = Patienttable.getSelectedRow();
-    if (row == -1) return;
-    
-    DefaultTableModel model = (DefaultTableModel) Patienttable.getModel();
-    
-    IDField.setText(model.getValueAt(row, 0).toString());
-    NameField.setText(model.getValueAt(row, 1).toString());
-    GenderFromTable(model.getValueAt(row, 2).toString());
-    ContactField.setText(model.getValueAt(row, 3).toString());
-    AddressField.setText(model.getValueAt(row, 4).toString());
-    AgeField.setText(model.getValueAt(row, 5).toString());
-    
-    // 🔒 Lock ID field (important - prevents changing primary key)
-    IDField.setEditable(false);
-}
-
-private void GenderFromTable(String gender) {
-    if (gender.equalsIgnoreCase("Male")) {
-        Male.setSelected(true);
-        Female.setSelected(false);
-    } else if (gender.equalsIgnoreCase("Female")) {
-        Female.setSelected(true);
-        Male.setSelected(false);
-    }
-    
-    }//GEN-LAST:event_PatienttableMouseClicked
-    
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AddPatient().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel AddPatientPanel;
-    private javax.swing.JPanel AddpatientLogo;
-    private javax.swing.JPanel Addpatientbg;
-    private javax.swing.JLabel Addpatientxt;
+    private javax.swing.JPanel AddPatientForm;
     private javax.swing.JLabel Address;
     private javax.swing.JTextField AddressField;
     private javax.swing.JLabel Age;
     private javax.swing.JTextField AgeField;
-    private javax.swing.JLabel Contact;
     private javax.swing.JTextField ContactField;
-    private javax.swing.JRadioButton Female;
     private javax.swing.JLabel Gender;
     private javax.swing.JButton Home;
-    private javax.swing.JLabel ID;
-    private javax.swing.JTextField IDField;
-    private javax.swing.JRadioButton Male;
+    private javax.swing.JLabel Id;
+    private javax.swing.JTextField IdField;
     private javax.swing.JLabel Name;
     private javax.swing.JTextField NameField;
-    private javax.swing.JPanel Patientpanel;
-    public javax.swing.JTable Patienttable;
+    private javax.swing.JTable PatientTable;
     private javax.swing.JButton Remove;
-    private javax.swing.JButton Save;
+    private javax.swing.JButton SaveButton;
+    private javax.swing.JButton Search;
+    private javax.swing.JButton ShortByName;
     private javax.swing.JButton SortById;
-    private javax.swing.JButton SortByName;
-    private javax.swing.JPanel Table;
     private javax.swing.JButton Update;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+       
+    private DefaultTableModel tableModel;
+        
+    private void setupTable() {
+    tableModel = new DefaultTableModel(
+        new Object[][] {},
+        new String[] {"ID", "Name", "Gender", "Contact", "Age", "Address"}
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // disables editing for all cells
+        }
+    };
 
-    private void clearFields() {
-      
-    IDField.setText("");
-    NameField.setText("");
-    AgeField.setText("");
-    ContactField.setText("");
-    AddressField.setText("");
-    buttonGroup1.clearSelection();    
+    PatientTable.setModel(tableModel);
+
     }
-    private void loadQueueData() {
-    DefaultTableModel model = (DefaultTableModel) Patienttable.getModel();
-    model.setRowCount(0); // Clear table
-    
-    // Get all patients from queue
-    String[][] patients = controller.getAllQueuePatients();
-    
-    // Add each patient to table
-    for (String[] patient : patients) {
-        model.addRow(patient);
-    }
-}
-    private void updatePatient() {
-    DefaultTableModel model = (DefaultTableModel) Patienttable.getModel();
-    model.setRowCount(0); // Clear table
-    
-    // Get all patients from queue
-    String[][] patients = controller.getAllQueuePatients();
-    
-    // Add each patient to table
-    for (String[] patient : patients) {
-        model.addRow(patient);
-    }
-    }
+    private void loadPatientsToTable() {
+        tableModel.setRowCount(0);
+        PatientQueueController queue = PatientQueueController.getInstance();
+        String[][] queuePatients = queue.getAllQueuePatients();
+
+        for (String[] p : queuePatients) {
+            tableModel.addRow(new Object[]{
+                p[0],  // ID
+                p[1],  // Name
+                p[2],  // Gender
+                p[3],  // Contact
+                p[5],  // Age
+                p[4]   // Address
+            });
+        }
 }
 
+
+    private String getSelectedGender() {
+        if (jRadioButton1.isSelected()) return "Male";
+        if (jRadioButton2.isSelected()) return "Female";
+        return "";
+    }
+
+       private void savePatient() {
+        String idText = IdField.getText().trim();
+        String name = NameField.getText().trim();
+        String gender = getSelectedGender();
+        String contact = ContactField.getText().trim();
+        String ageText = AgeField.getText().trim();
+        String address = AddressField.getText().trim();
+
+        // Validation
+        if (idText.isEmpty() || name.isEmpty() || gender.isEmpty() ||
+            contact.isEmpty() || ageText.isEmpty() || address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(idText);
+
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(this, "ID must be a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Check for duplicate ID
+            if (Model.getPatientById(id) != null) {
+                JOptionPane.showMessageDialog(this, "Patient with this ID already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (!contact.matches("\\d{10,15}")) {
+                JOptionPane.showMessageDialog(this, 
+                    "Invalid contact number!\nMust contain only digits and be 10-15 digits long.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int age = Integer.parseInt(ageText);
+            if (age <= 0) {
+                JOptionPane.showMessageDialog(this, "Age must be a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create and add patient to permanent list
+            Model patient = new Model(id, name, gender, contact, age, address);
+            Model.addPatient(patient);
+
+            // NEW: Add to queue so it appears in table immediately
+            PatientQueueController queue = PatientQueueController.getInstance();
+            queue.enqueuePatient(String.valueOf(id), name, gender, contact, address, String.valueOf(age));
+
+            JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // Clear form
+            IdField.setText("");
+            NameField.setText("");
+            ContactField.setText("");
+            AgeField.setText("");
+            AddressField.setText("");
+            buttonGroup1.clearSelection();
+
+            // Refresh table - now shows the new patient
+            loadPatientsToTable();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID and Age must be valid numbers!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void clearForm() {
+        NameField.setText("");
+        ContactField.setText("");
+        AgeField.setText("");
+        AddressField.setText("");
+        buttonGroup1.clearSelection();
+        IdField.setEditable(true);
+        PatientTable.clearSelection();
+    }
+   
+}

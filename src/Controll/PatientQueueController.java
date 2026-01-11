@@ -1,9 +1,9 @@
 package Controll;
 
+import Model.Model;  // <-- NEW: Import your Model class
+
 public class PatientQueueController {
-
     private static PatientQueueController instance;
-
     private final int QUEUE_SIZE = 20;
     private String[][] queue = new String[QUEUE_SIZE][6];
     private int front = -1, rear = -1;
@@ -16,7 +16,7 @@ public class PatientQueueController {
         }
         return instance;
     }
-    
+
     // Check if queue is empty
     public boolean isQueueEmpty() {
         return front == -1;
@@ -27,41 +27,45 @@ public class PatientQueueController {
         return (rear + 1) % QUEUE_SIZE == front;
     }
 
-    // Add patient to queue (Enqueue)
+    // NEW: Enqueue directly from a Model object (perfect for AddPatient)
+    public boolean enqueuePatient(Model patient) {
+        if (patient == null) {
+            return false;
+        }
+        return enqueuePatient(
+            String.valueOf(patient.getId()),
+            patient.getName(),
+            patient.getGender(),
+            patient.getContact(),
+            patient.getAddress(),
+            String.valueOf(patient.getAge())
+        );
+    }
+
+    // Keep your existing enqueuePatient for backward compatibility
     public boolean enqueuePatient(String id, String name, String gender,
                                   String contact, String address, String age) {
-
-        // Validate input
         if (id.isEmpty() || name.isEmpty() || gender.isEmpty()) {
             return false;
         }
-
-        // Check if queue is full
         if (isQueueFull()) {
             return false;
         }
-
-        // Check for duplicate ID
         if (idExistsInQueue(id)) {
             return false;
         }
 
-        // First element
         if (front == -1) {
             front = 0;
         }
-
-        // Circular queue logic
         rear = (rear + 1) % QUEUE_SIZE;
 
-        // Store patient data
         queue[rear][0] = id;
         queue[rear][1] = name;
         queue[rear][2] = gender;
         queue[rear][3] = contact;
         queue[rear][4] = address;
         queue[rear][5] = age;
-
         return true;
     }
 
@@ -70,16 +74,13 @@ public class PatientQueueController {
         if (isQueueEmpty()) {
             return null;
         }
-
         String[] patient = queue[front];
-
         if (front == rear) {
             front = -1;
             rear = -1;
         } else {
             front = (front + 1) % QUEUE_SIZE;
         }
-
         return patient;
     }
 
@@ -96,41 +97,31 @@ public class PatientQueueController {
         if (isQueueEmpty()) {
             return new String[0][6];
         }
-
         int count = getQueueSize();
         String[][] patients = new String[count][6];
-
         int index = 0;
         int i = front;
-
         while (true) {
-            // Create a NEW array and copy values
             patients[index] = new String[6];
             for (int col = 0; col < 6; col++) {
                 patients[index][col] = queue[i][col];
             }
             index++;
-            
             if (i == rear) break;
             i = (i + 1) % QUEUE_SIZE;
         }
-
         return patients;
     }
 
     // Sort queue by ID (ascending)
     public void sortQueueById() {
         if (isQueueEmpty() || getQueueSize() == 1) return;
-
         String[][] patients = getAllQueuePatients();
-
-        // Bubble sort by ID
         for (int i = 0; i < patients.length - 1; i++) {
             for (int j = 0; j < patients.length - i - 1; j++) {
                 try {
                     int id1 = Integer.parseInt(patients[j][0]);
                     int id2 = Integer.parseInt(patients[j + 1][0]);
-
                     if (id1 > id2) {
                         String[] temp = patients[j];
                         patients[j] = patients[j + 1];
@@ -145,17 +136,13 @@ public class PatientQueueController {
                 }
             }
         }
-
         rebuildQueueDirect(patients);
     }
 
     // Sort queue by Name (ascending)
     public void sortQueueByName() {
         if (isQueueEmpty() || getQueueSize() == 1) return;
-
         String[][] patients = getAllQueuePatients();
-
-        // Bubble sort by Name
         for (int i = 0; i < patients.length - 1; i++) {
             for (int j = 0; j < patients.length - i - 1; j++) {
                 if (patients[j][1].compareToIgnoreCase(patients[j + 1][1]) > 0) {
@@ -165,50 +152,33 @@ public class PatientQueueController {
                 }
             }
         }
-
         rebuildQueueDirect(patients);
     }
 
-    // Rebuild queue directly
     private void rebuildQueueDirect(String[][] patients) {
-        // Reset queue
         front = -1;
         rear = -1;
-        
-        // Add each patient directly
         for (String[] patient : patients) {
             if (front == -1) {
                 front = 0;
             }
-            
             rear = (rear + 1) % QUEUE_SIZE;
-            
-            // Initialize new array for this slot
             queue[rear] = new String[6];
-            
-            // Copy each value
-            queue[rear][0] = patient[0];
-            queue[rear][1] = patient[1];
-            queue[rear][2] = patient[2];
-            queue[rear][3] = patient[3];
-            queue[rear][4] = patient[4];
-            queue[rear][5] = patient[5];
+            System.arraycopy(patient, 0, queue[rear], 0, 6);
         }
-    } 
-    
+    }
+
     public int getQueueSize() {
         if (isQueueEmpty()) return 0;
-
         if (rear >= front) {
             return rear - front + 1;
         } else {
             return QUEUE_SIZE - front + rear + 1;
         }
     }
-    
+
     public boolean idExistsInQueue(String id) {
         if (isQueueEmpty()) return false;
-
         int i = front;
         while (true) {
             if (queue[i][0].equals(id)) {
@@ -219,50 +189,47 @@ public class PatientQueueController {
         }
         return false;
     }
-    
-    // ✅ FIXED UPDATE METHOD - No more infinite recursion!
+
+    // Update Patient
     public boolean updatePatient(int logicalIndex, String[] patientData) {
-        System.out.println("updatePatient called with index: " + logicalIndex);
-        
-        // Validate input
         if (patientData[0].isEmpty() || patientData[1].isEmpty() || patientData[2].isEmpty()) {
-            System.out.println("Validation failed: empty required fields");
             return false;
         }
-
-        // Validate contact (at least 9 digits)
         if (patientData[3].length() < 9) {
-            System.out.println("Validation failed: contact too short");
             return false;
         }
-
-        // Check if queue is empty
         if (isQueueEmpty()) {
-            System.out.println("Queue is empty");
             return false;
         }
-
-        // Check if index is valid
         int queueSize = getQueueSize();
         if (logicalIndex < 0 || logicalIndex >= queueSize) {
-            System.out.println("Invalid index: " + logicalIndex + " (queue size: " + queueSize + ")");
             return false;
         }
-
-        // Convert logical index to physical queue index
         int physicalIndex = (front + logicalIndex) % QUEUE_SIZE;
-        System.out.println("Physical index: " + physicalIndex);
-
-        // Update the patient data at the physical index
         queue[physicalIndex] = new String[6];
-        queue[physicalIndex][0] = patientData[0];
-        queue[physicalIndex][1] = patientData[1];
-        queue[physicalIndex][2] = patientData[2];
-        queue[physicalIndex][3] = patientData[3];
-        queue[physicalIndex][4] = patientData[4];
-        queue[physicalIndex][5] = patientData[5];
-
-        System.out.println("Patient updated successfully");
+        System.arraycopy(patientData, 0, queue[physicalIndex], 0, 6);
         return true;
     }
+
+    // Dummy patients updated with proper String IDs
+    public void addDummyPatients() {
+        enqueuePatient("1", "Ram Sharma", "Male", "9800000001", "Kathmandu", "25");
+        enqueuePatient("2", "Sita Rai", "Female", "9800000002", "Pokhara", "30");
+        enqueuePatient("3", "Hari Thapa", "Male", "9800000003", "Lalitpur", "45");
+        enqueuePatient("4", "Gita Karki", "Female", "9800000004", "Bhaktapur", "38");
+        enqueuePatient("5", "Nabin KC", "Male", "9800000005", "Chitwan", "50");
+    }
+    public String[] findPatientById(String patientId) {
+    if (isQueueEmpty()) return null;
+
+    int i = front;
+    while (true) {
+        if (queue[i][0].equals(patientId)) {
+            return queue[i];
+        }
+        if (i == rear) break;
+        i = (i + 1) % QUEUE_SIZE;
+    }
+    return null;
+}
 }

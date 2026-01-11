@@ -4,6 +4,9 @@
  */
 package View;
 
+import Controll.Navigator;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author upash
@@ -11,6 +14,7 @@ package View;
 public class AdminPannel extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminPannel.class.getName());
+    private String selectedPatientId;
 
     /**
      * Creates new form AdminPannel
@@ -38,6 +42,8 @@ public class AdminPannel extends javax.swing.JFrame {
         CheckupPic = new javax.swing.JLabel();
         Checkuptxt = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
+        PatientReqtxt = new javax.swing.JLabel();
+        LogoutPic = new javax.swing.JLabel();
         ReportPanel = new javax.swing.JPanel();
         ReportPic = new javax.swing.JLabel();
         Patienttxt = new javax.swing.JLabel();
@@ -160,6 +166,30 @@ public class AdminPannel extends javax.swing.JFrame {
         jPanel9.setMinimumSize(new java.awt.Dimension(500, 500));
         jPanel9.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        PatientReqtxt.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        PatientReqtxt.setText("Logout");
+        PatientReqtxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PatientReqtxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                PatientReqtxtMouseEntered(evt);
+            }
+        });
+        jPanel9.add(PatientReqtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
+
+        LogoutPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
+        LogoutPic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutPicMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogoutPicMouseEntered(evt);
+            }
+        });
+        jPanel9.add(LogoutPic, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
+
         AdminPageMain.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, 310, 280));
 
         ReportPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -170,8 +200,16 @@ public class AdminPannel extends javax.swing.JFrame {
 
         ReportPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/medical_report.png"))); // NOI18N
         ReportPic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ReportPicMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ReportPicMouseEntered(evt);
+            }
+        });
+        ReportPic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ReportPicKeyPressed(evt);
             }
         });
         ReportPanel.add(ReportPic, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
@@ -196,6 +234,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         MedPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/drug.png"))); // NOI18N
         MedPic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MedPicMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MedPicMouseEntered(evt);
             }
@@ -205,8 +246,14 @@ public class AdminPannel extends javax.swing.JFrame {
         Medtxt.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         Medtxt.setText("Add medicine");
         Medtxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MedtxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MedtxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                MedtxtMouseExited(evt);
             }
         });
         MedPanel.add(Medtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
@@ -311,30 +358,26 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void AddPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddPicMouseClicked
         // TODO add your handling code here:
-        this.dispose(); // Close current window
-    AddPatient patient = new AddPatient();
-    patient.setVisible(true);
+        Navigator.showAddPatient();
+        this.dispose();
     }//GEN-LAST:event_AddPicMouseClicked
 
     private void AddtxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddtxtMouseClicked
         // TODO add your handling code here:
+        Navigator.showAddPatient();
         this.dispose();
-        AddPatient patient = new AddPatient();
-        patient.setVisible(true);
     }//GEN-LAST:event_AddtxtMouseClicked
 
     private void CheckupPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckupPicMouseClicked
         // TODO add your handling code here:
-        this.dispose(); // Close current window
-    CheckUp checkup = new CheckUp();
-    checkup.setVisible(true);
+        Navigator.showPCheckup();
+        this.dispose();
     }//GEN-LAST:event_CheckupPicMouseClicked
 
     private void CheckuptxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckuptxtMouseClicked
         // TODO add your handling code here:
-        this.dispose(); // Close current window
-    CheckUp checkup = new CheckUp();
-    checkup.setVisible(true);
+        Navigator.showPCheckup();
+        this.dispose();
     }//GEN-LAST:event_CheckuptxtMouseClicked
 
     private void PoweroffpicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PoweroffpicMouseClicked
@@ -346,6 +389,56 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_PowerofftxtMouseClicked
+
+    private void MedPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MedPicMouseClicked
+        // TODO add your handling code here:
+        Navigator.showAddMed();
+        this.dispose();
+    }//GEN-LAST:event_MedPicMouseClicked
+
+    private void MedtxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MedtxtMouseExited
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_MedtxtMouseExited
+
+    private void MedtxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MedtxtMouseClicked
+        // TODO add your handling code here:
+        Navigator.showAddMed();
+        this.dispose();
+    }//GEN-LAST:event_MedtxtMouseClicked
+
+    private void PatientReqtxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientReqtxtMouseEntered
+        // TODO add your handling code here:
+        PatientReqtxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_PatientReqtxtMouseEntered
+
+    private void ReportPicKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ReportPicKeyPressed
+        // TODO add your handling code here:
+              
+    }//GEN-LAST:event_ReportPicKeyPressed
+
+    private void ReportPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportPicMouseClicked
+        // TODO add your handling code here:
+        Navigator.showPatientReport(selectedPatientId);
+
+    }//GEN-LAST:event_ReportPicMouseClicked
+
+    private void LogoutPicMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutPicMouseEntered
+        // TODO add your handling code here:
+        LogoutPic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_LogoutPicMouseEntered
+
+    private void LogoutPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutPicMouseClicked
+        // TODO add your handling code here:
+        Navigator.showAdminLoginPage();
+        this.dispose();
+    }//GEN-LAST:event_LogoutPicMouseClicked
+
+    private void PatientReqtxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientReqtxtMouseClicked
+        // TODO add your handling code here:
+        Navigator.showAdminLoginPage();
+        this.dispose();
+    }//GEN-LAST:event_PatientReqtxtMouseClicked
 
     /**
      * @param args the command line arguments
@@ -369,7 +462,19 @@ public class AdminPannel extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AdminPannel().setVisible(true));
+        javax.swing.SwingUtilities.invokeLater(() -> {
+        javax.swing.JFrame frame = new javax.swing.JFrame("Admin Pannel");
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+
+        frame.setContentPane(new HomePage());
+
+        // FULL SCREEN
+        frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
+
+        frame.setVisible(true);
+        frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -382,9 +487,11 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JPanel Checkup;
     private javax.swing.JLabel CheckupPic;
     private javax.swing.JLabel Checkuptxt;
+    private javax.swing.JLabel LogoutPic;
     private javax.swing.JPanel MedPanel;
     private javax.swing.JLabel MedPic;
     private javax.swing.JLabel Medtxt;
+    private javax.swing.JLabel PatientReqtxt;
     private javax.swing.JLabel Patienttxt;
     private javax.swing.JPanel Poweroff;
     private javax.swing.JLabel Poweroffpic;

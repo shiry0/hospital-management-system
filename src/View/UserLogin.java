@@ -4,6 +4,7 @@
  */
 package View;
 
+import java.awt.Color;
 /**
  *
  * @author upash
@@ -11,14 +12,17 @@ package View;
 public class UserLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserLogin.class.getName());
+    
 
     /**
      * Creates new form UserLogin
      */
     public UserLogin() {
+        
         initComponents();
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,25 +33,84 @@ public class UserLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        Usertxt = new javax.swing.JLabel();
+        User = new javax.swing.JLabel();
+        Userfield = new javax.swing.JTextField();
+        LoginpageLog = new javax.swing.JButton();
+        LoginpageReg = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1707, 1067));
-        setPreferredSize(new java.awt.Dimension(1707, 1067));
 
         jPanel1.setBackground(new java.awt.Color(219, 244, 245));
         jPanel1.setMinimumSize(new java.awt.Dimension(1707, 1067));
         jPanel1.setPreferredSize(new java.awt.Dimension(1707, 1067));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1707, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1067, Short.MAX_VALUE)
-        );
+        Usertxt.setFont(new java.awt.Font("Segoe UI Emoji", 3, 36)); // NOI18N
+        Usertxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Usertxt.setText("User Login");
+        jPanel1.add(Usertxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, 270, -1));
+
+        User.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        User.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        User.setText("Username:");
+        jPanel1.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 560, -1, 40));
+
+        Userfield.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
+        Userfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserfieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Userfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 570, 150, -1));
+
+        LoginpageLog.setBackground(new java.awt.Color(0, 51, 255));
+        LoginpageLog.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        LoginpageLog.setText("Login");
+        LoginpageLog.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LoginpageLog.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LoginpageLogMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LoginpageLogMouseExited(evt);
+            }
+        });
+        LoginpageLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginpageLogActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LoginpageLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, 120, -1));
+
+        LoginpageReg.setBackground(new java.awt.Color(0, 51, 255));
+        LoginpageReg.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        LoginpageReg.setText("Admin login");
+        LoginpageReg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LoginpageReg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LoginpageRegMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LoginpageRegMouseExited(evt);
+            }
+        });
+        LoginpageReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginpageRegActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LoginpageReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 650, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel1.setText("Are you a Admin");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 660, -1, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Userlog.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,6 +130,58 @@ public class UserLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void UserfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UserfieldActionPerformed
+
+    private void LoginpageLogMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginpageLogMouseEntered
+        // TODO add your handling code here:
+        LoginpageLog.setBackground(new Color(0,102, 255));
+    }//GEN-LAST:event_LoginpageLogMouseEntered
+
+    private void LoginpageLogMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginpageLogMouseExited
+        // TODO add your handling code here:
+        LoginpageLog.setBackground(new Color(0,51,255));
+    }//GEN-LAST:event_LoginpageLogMouseExited
+
+    private void LoginpageLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginpageLogActionPerformed
+        // TODO add your handling code here:
+
+    String patientId = Userfield.getText().trim();
+
+    if (patientId.isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Enter your Patient ID!");
+    return;
+    }
+
+    User_Panel page = new User_Panel(patientId);
+
+    javax.swing.JFrame frame = new javax.swing.JFrame("Prescription");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+    frame.setContentPane(page);
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+    this.dispose();
+    
+    }//GEN-LAST:event_LoginpageLogActionPerformed
+    
+    private void LoginpageRegMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginpageRegMouseEntered
+        // TODO add your handling code here:
+        LoginpageReg.setBackground(new Color(0,102, 255));
+    }//GEN-LAST:event_LoginpageRegMouseEntered
+
+    private void LoginpageRegMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginpageRegMouseExited
+        // TODO add your handling code here:
+        LoginpageReg.setBackground(new Color(0,51,255));
+    }//GEN-LAST:event_LoginpageRegMouseExited
+
+    private void LoginpageRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginpageRegActionPerformed
+        // TODO add your handling code here:                                     
+    new AdminLoginPage().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_LoginpageRegActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -89,10 +204,21 @@ public class UserLogin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UserLogin().setVisible(true));
+        javax.swing.SwingUtilities.invokeLater(() -> {
+        UserLogin login = new UserLogin();
+        login.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // fullscreen
+        login.setVisible(true);
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LoginpageLog;
+    private javax.swing.JButton LoginpageReg;
+    private javax.swing.JLabel User;
+    private javax.swing.JTextField Userfield;
+    private javax.swing.JLabel Usertxt;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

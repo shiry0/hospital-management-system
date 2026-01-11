@@ -5,6 +5,8 @@
 package View;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  *
@@ -12,31 +14,70 @@ import javax.swing.JPanel;
  */
 public class HomePage extends javax.swing.JPanel {
     
-    
+     private Timer timer;     
+     private int progress = 0;
     /**
      * Creates new form HomePage
      */
     public HomePage() {
     initComponents();
-    
+    startSplashTimer();
+    jProgressBar1.setMinimum(0);
+        jProgressBar1.setMaximum(100);
+        jProgressBar1.setValue(0);
+        jProgressBar1.setStringPainted(true);
+
+        startLoading();
     
 }
+     private void startLoading() {
+        int totalTimeMs = 5000;   // 5 seconds
+        int stepMs = 50;          // update every 50ms
+        int stepValue = 100 / (totalTimeMs / stepMs); // = 1
 
-    public static void main(String[] args) {
-    javax.swing.SwingUtilities.invokeLater(() -> {
-        javax.swing.JFrame frame = new javax.swing.JFrame("Home Page");
-        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800);
-        
-        // Add your JPanel to the frame
-        frame.setContentPane(new HomePage());
-        
-        frame.setLocationRelativeTo(null); // center screen
-        frame.setVisible(true);
-    });
+        timer = new Timer(stepMs, e -> {
+            progress += stepValue;
+            if (progress > 100) progress = 100;
+
+            jProgressBar1.setValue(progress);
+
+            if (progress >= 100) {
+                timer.stop();
+                new AdminLoginPage().setVisible(true);
+
+                // ✅ Close the JFrame that contains this JPanel
+                java.awt.Window w = SwingUtilities.getWindowAncestor(this);
+                if (w != null) w.dispose();
+            }
+        });
+         timer.start();
+    }
+
+   public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Home Page");
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            frame.setSize(1200, 800);
+            frame.setContentPane(new HomePage());
+            frame.setLocationRelativeTo(null);
+            frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+            frame.setUndecorated(true); //  removes title bar
+            frame.setVisible(true);
+        });
+    }
     
-}          
-        
+          
+        private void startSplashTimer() {
+        Timer timer = new Timer(5000, e -> {
+            new AdminLoginPage().setVisible(true);
+
+            // Close the JFrame that contains this JPanel
+            java.awt.Window w = SwingUtilities.getWindowAncestor(this);
+            if (w != null) w.dispose();
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
 
 
     /**
@@ -48,20 +89,43 @@ public class HomePage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        LoadingGif = new javax.swing.JLabel();
+
+        jPanel1.setBackground(new java.awt.Color(219, 244, 245));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1707, 1067));
+        jPanel1.setName(""); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(1707, 1067));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jProgressBar1.setBackground(new java.awt.Color(219, 245, 244));
+        jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 750, 700, 50));
+
+        LoadingGif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginpage.gif"))); // NOI18N
+        jPanel1.add(LoadingGif, new org.netbeans.lib.awtextra.AbsoluteConstraints(-250, -60, 1862, 988));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1399, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 809, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LoadingGif;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
     // End of variables declaration//GEN-END:variables
 
 }

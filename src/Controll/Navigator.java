@@ -1,59 +1,79 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Controll;
+    package Controll;
 
-/**
- *
- * @author upash
- */
-// File: controller/Navigator.java
+    import View.AddPatient;
+    import View.AdminPannel;
+    import View.AdminLoginPage;
+    import View.PCheckup;  // Assuming this is your JPanel version
+    import View.AddMed;
+    import View.PatientReport;
+    import View.UserLogin;
+    import View.User_Panel;
+    import javax.swing.JFrame;
+    import javax.swing.JPanel;
 
+    public class Navigator {
+        private static JFrame currentFrame;
 
-import View.AddPatient;
-import View.AdminPannel;
-import View.AdminLoginPage;
-import View.CheckUp;
-import View.UserLogin;
-// Add imports for all your View classes
-
-import javax.swing.JFrame;
-
-public class Navigator {
-    private static JFrame currentFrame;
-
-    // Hide current and show new frame
-    private static void switchTo(JFrame newFrame) {
+        // For JPanel forms
+       private static void switchToPanel(JPanel panel, String title) {
         if (currentFrame != null) {
             currentFrame.dispose();
         }
-        newFrame.setVisible(true);
-        currentFrame = newFrame;
+
+        JFrame frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        frame.setContentPane(panel);
+
+        frame.setVisible(true);              // show first
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // then maximize
+
+        currentFrame = frame;
     }
 
-    public static void showAdminLogin() {
-        switchTo(new AdminLoginPage());
-    }
+        // For JFrame forms (like AdminPannel)
+        private static void switchTo(JFrame newFrame) {
+            if (currentFrame != null) {
+                currentFrame.dispose();
+            }
+            newFrame.setVisible(true);
+            currentFrame = newFrame;
+        }
 
-    public static void showAdminPanel() {
-        switchTo(new AdminPannel());
-    }
 
-    public static void showAddPatient() {
-        switchTo(new AddPatient());
-    }
 
-    public static void showCheckUp() {
-        switchTo(new CheckUp());
-    }
+        // CORRECT: AdminPannel is a JFrame
+        public static void showAdminPanel() {
+            switchTo(new AdminPannel());
+        }
 
-    public static void showUserLogin() {
-        switchTo(new UserLogin());
-    }
+        public static void showAddPatient() {
+            switchToPanel(new AddPatient(), "Add Patient");
+        }
 
-    // Optional: go back to login on logout
-    public static void logout() {
-        switchTo(new AdminLoginPage());
+        public static void showPCheckup() {
+             switchToPanel(new PCheckup(), "Patient Check-Up");
+        }
+
+        public static void showAddMed(){
+            switchToPanel(new AddMed(),"Medicine add");
+        }
+       public static void showPrescriptionPage(String patientId) {
+        switchToPanel(new View.PrescriptionPage(patientId), "Prescription");
+       }
+       public static void showUserPanel(String patientId) {
+       switchToPanel(new User_Panel(patientId), "User Panel");
+        }
+       public static void showPatientReport(String patientId) {
+        switchToPanel(new View.PatientReport(patientId), "Patient Report");
+        }  
+       public static void showAdminLoginPage() {
+            switchTo(new AdminLoginPage());
+        }
+        public static void showUserLogin() {
+            switchTo(new UserLogin());
+        }
+       
+
     }
-}

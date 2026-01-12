@@ -241,7 +241,7 @@ public class PCheckup extends javax.swing.JPanel {
         return;
     }
 
-    // ✅ SAVE for this specific patient
+    //  SAVE for this specific patient
     PrescriptionStore.getInstance().save(patientId, doctorRec, medicineDetails);
 
     javax.swing.JOptionPane.showMessageDialog(

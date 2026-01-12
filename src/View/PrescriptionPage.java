@@ -122,6 +122,7 @@ public void setVisible(boolean visible) {
     private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
         // TODO add your handling code here:
         Navigator.showUserPanel(patientId);
+       
     }//GEN-LAST:event_HomeActionPerformed
 
 

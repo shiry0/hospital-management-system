@@ -8,7 +8,7 @@ import Controll.Navigator;
 import Controll.PatientQueueController;
 import Model.Model;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import Controll.DeletedPatient;
 import Controll.DeletedPatient;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,14 +24,14 @@ public class AddPatient extends javax.swing.JPanel {
         public AddPatient() {
         initComponents();
         setupTable();
-        loadPatientsToTable();
         PatientQueueController queue = PatientQueueController.getInstance();
         if (queue.isQueueEmpty()) {
-            queue.addDummyPatients();
+        queue.addDummyPatients();
         }
+        loadPatientsToTable();
 
-        jTextField1.setText("Enter ID:");
-    jTextField1.setForeground(java.awt.Color.GRAY);
+        
+    SearchTxt.setForeground(java.awt.Color.GRAY);
     }
 
     
@@ -71,7 +71,7 @@ public class AddPatient extends javax.swing.JPanel {
         ShortByName = new javax.swing.JButton();
         Home = new javax.swing.JButton();
         Search = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        SearchTxt = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(219, 245, 244));
         setPreferredSize(new java.awt.Dimension(1707, 1067));
@@ -278,14 +278,19 @@ public class AddPatient extends javax.swing.JPanel {
         add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 260, -1, -1));
 
         Search.setText("Search");
-        add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 260, -1, -1));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                SearchActionPerformed(evt);
             }
         });
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 260, 130, -1));
+        add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 260, -1, -1));
+
+        SearchTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchTxtActionPerformed(evt);
+            }
+        });
+        add(SearchTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 260, 130, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
@@ -372,7 +377,8 @@ public class AddPatient extends javax.swing.JPanel {
             // Update in queue (logical index = selectedRow)
             PatientQueueController queue = PatientQueueController.getInstance();
             boolean updated = queue.updatePatient(selectedRow, updatedData);
-
+            queue.backupQueue();
+            
             if (updated) {
                 JOptionPane.showMessageDialog(this, "Patient updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
@@ -447,100 +453,58 @@ public class AddPatient extends javax.swing.JPanel {
 
     private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
         // TODO add your handling code here:
-        String idText = IdField.getText().trim();
+ // Get selected row
+    int row = PatientTable.getSelectedRow();
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Select a patient to delete!");
+        return;
+    }
 
-        // Check if ID field is empty
-        if (idText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter an ID to remove!", "No ID", JOptionPane.WARNING_MESSAGE);
-            return;
+    DefaultTableModel model = (DefaultTableModel) PatientTable.getModel();
+
+    // Get patient details from the selected row
+    String patientId = model.getValueAt(row, 0).toString();
+    String patientName = model.getValueAt(row, 1).toString();
+    
+    String[] deleted = new String[]{
+    model.getValueAt(row, 0).toString(),
+    model.getValueAt(row, 1).toString(),
+    model.getValueAt(row, 2).toString(),
+    model.getValueAt(row, 3).toString(),
+    model.getValueAt(row, 4).toString(),
+    model.getValueAt(row, 5).toString()
+};
+DeletedPatient.getInstance().push(deleted);
+
+
+    // ✅ Remove from queue
+    PatientQueueController queue = PatientQueueController.getInstance();
+    
+    int queueSize = queue.getQueueSize();
+    java.util.List<String[]> keptPatients = new java.util.ArrayList<>();
+
+    // Dequeue all patients
+    for (int i = 0; i < queueSize; i++) {
+        String[] p = queue.dequeuePatient();
+        if (p != null && !p[0].equals(patientId)) {
+            keptPatients.add(p); // Keep patients that don't match
         }
+    }
 
-        int id;
-        try {
-            id = Integer.parseInt(idText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "ID must be a valid number!", "Invalid ID", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Re-enqueue kept patients
+    for (String[] p : keptPatients) {
+        queue.enqueuePatient(p[0], p[1], p[2], p[3], p[4], p[5]);
+    }
 
-        PatientQueueController queue = PatientQueueController.getInstance();
+    JOptionPane.showMessageDialog(this, 
+        "Patient " + patientName + " (ID: " + patientId + ") removed!\n" +
+        "Added to deleted patients stack.\n" +
+        "Stack size: " + DeletedPatient.getInstance().getSize(), 
+        "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        // Get current queue patients
-        String[][] patients = queue.getAllQueuePatients();
-
-        // Find the logical index of the patient with matching ID
-        int targetIndex = -1;
-        for (int i = 0; i < patients.length; i++) {
-            if (Integer.parseInt(patients[i][0]) == id) {
-                targetIndex = i;
-                break;
-            }
-        }
-
-        // If not found
-        if (targetIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Patient with ID " + id + " not found in queue!", "Not Found", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Remove by dequeuing all patients before the target, then skip the target, then re-enqueue the rest
-        // Temporary storage
-        java.util.List<String[]> remainingPatients = new java.util.ArrayList<>();
-
-        for (int i = 0; i < patients.length; i++) {
-            if (i != targetIndex) {
-                remainingPatients.add(patients[i]);
-            }
-        }
-
-        // Rebuild queue with remaining patients
-        queue = PatientQueueController.getInstance(); // Re-get instance
-        // Clear queue by resetting front/rear (private fields, so we rebuild)
-        // We'll use a fresh queue rebuild
-        // Since we can't directly remove from middle, we rebuild
-        // Reset queue indirectly by creating new data and rebuilding
-        // But easiest: dequeue all, skip the one to remove, re-enqueue others
-
-        // Better way: dequeue all patients, skip the one with matching ID, re-enqueue the rest
-        int queueSize = queue.getQueueSize();
-        java.util.List<String[]> keptPatients = new java.util.ArrayList<>();
-
-        for (int i = 0; i < queueSize; i++) {
-            String[] p = queue.dequeuePatient();
-            if (p != null && Integer.parseInt(p[0]) != id) {
-                keptPatients.add(p);
-            }
-        }
-
-        // Re-enqueue kept patients
-        for (String[] p : keptPatients) {
-            queue.enqueuePatient(p[0], p[1], p[2], p[3], p[4], p[5]);
-        }
-
-        JOptionPane.showMessageDialog(this, "Patient with ID " + id + " removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-        // Clear the ID field and refresh table
-        IdField.setText("");
-        loadPatientsToTable();
-        PatientTable.clearSelection();
-        int row = PatientTable.getSelectedRow();
-        if (row == -1) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Select a patient to delete!");
-    return;
-}
-
-DefaultTableModel model = (DefaultTableModel) PatientTable.getModel();
-
-// adjust indexes to match your table columns
-String patientId = model.getValueAt(row, 0).toString();
-String patientName = model.getValueAt(row, 1).toString();
-
-//  log deleted patient
-DeletedPatient.getInstance().add(patientId, patientName);
-
-//  now delete from table/store
-model.removeRow(row);
-
+    // Refresh table and clear form
+    loadPatientsToTable();
+    clearForm();
     }//GEN-LAST:event_RemoveActionPerformed
 
     private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
@@ -548,11 +512,15 @@ model.removeRow(row);
         Navigator.showAdminPanel();
     }//GEN-LAST:event_HomeActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void SearchTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxtActionPerformed
         // TODO add your handling code here:
-        
-    
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        performSearch();
+    }//GEN-LAST:event_SearchTxtActionPerformed
+   
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
+        // TODO add your handling code here:
+        performSearch();
+    }//GEN-LAST:event_SearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -572,6 +540,7 @@ model.removeRow(row);
     private javax.swing.JButton Remove;
     private javax.swing.JButton SaveButton;
     private javax.swing.JButton Search;
+    private javax.swing.JTextField SearchTxt;
     private javax.swing.JButton ShortByName;
     private javax.swing.JButton SortById;
     private javax.swing.JButton Update;
@@ -582,7 +551,6 @@ model.removeRow(row);
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
        
     private DefaultTableModel tableModel;
@@ -666,7 +634,7 @@ model.removeRow(row);
                 JOptionPane.showMessageDialog(this, "Age must be a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            
             // Create and add patient to permanent list
             Model patient = new Model(id, name, gender, contact, age, address);
             Model.addPatient(patient);
@@ -674,7 +642,8 @@ model.removeRow(row);
             // NEW: Add to queue so it appears in table immediately
             PatientQueueController queue = PatientQueueController.getInstance();
             queue.enqueuePatient(String.valueOf(id), name, gender, contact, address, String.valueOf(age));
-
+            queue.backupQueue();
+            
             JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             // Clear form
@@ -702,5 +671,40 @@ model.removeRow(row);
         IdField.setEditable(true);
         PatientTable.clearSelection();
     }
-   
+   private void performSearch() {
+    String searchId = SearchTxt.getText().trim();
+
+    if (searchId.isEmpty() || searchId.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Enter Patient ID to search");
+        return;
+    }
+
+    String[] patient = PatientQueueController
+                            .getInstance()
+                            .findPatientById(searchId);
+
+    if (patient == null) {
+        JOptionPane.showMessageDialog(this, "Patient not found");
+        return;
+    }
+
+    // Fill fields
+    IdField.setText(patient[0]);
+    NameField.setText(patient[1]);
+
+    String gender = patient[2];
+    if ("Male".equalsIgnoreCase(gender)) {
+        jRadioButton1.setSelected(true);
+    } else if ("Female".equalsIgnoreCase(gender)) {
+        jRadioButton2.setSelected(true);
+    } else {
+        buttonGroup1.clearSelection();
+    }
+
+    ContactField.setText(patient[3]);
+    AddressField.setText(patient[4]);
+    AgeField.setText(patient[5]);
+
+    JOptionPane.showMessageDialog(this, "Patient found!");
+}
 }

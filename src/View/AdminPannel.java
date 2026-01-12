@@ -206,6 +206,9 @@ public class AdminPannel extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ReportPicMouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ReportPicMouseExited(evt);
+            }
         });
         ReportPic.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -218,6 +221,9 @@ public class AdminPannel extends javax.swing.JFrame {
         Patienttxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Patienttxt.setText("Patient Report");
         Patienttxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PatienttxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 PatienttxtMouseEntered(evt);
             }
@@ -239,6 +245,9 @@ public class AdminPannel extends javax.swing.JFrame {
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MedPicMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                MedPicMouseExited(evt);
             }
         });
         MedPanel.add(MedPic, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
@@ -420,7 +429,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private void ReportPicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportPicMouseClicked
         // TODO add your handling code here:
         Navigator.showPatientReport(selectedPatientId);
-
     }//GEN-LAST:event_ReportPicMouseClicked
 
     private void LogoutPicMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutPicMouseEntered
@@ -439,6 +447,21 @@ public class AdminPannel extends javax.swing.JFrame {
         Navigator.showAdminLoginPage();
         this.dispose();
     }//GEN-LAST:event_PatientReqtxtMouseClicked
+
+    private void PatienttxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatienttxtMouseClicked
+        // TODO add your handling code here:
+        Navigator.showPatientReport(selectedPatientId);
+    }//GEN-LAST:event_PatienttxtMouseClicked
+
+    private void ReportPicMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportPicMouseExited
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_ReportPicMouseExited
+
+    private void MedPicMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MedPicMouseExited
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_MedPicMouseExited
 
     /**
      * @param args the command line arguments

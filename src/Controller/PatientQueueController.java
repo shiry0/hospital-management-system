@@ -232,4 +232,37 @@ public class PatientQueueController {
     }
     return null;
 }
+    private String[][] lastBackup = null;
+
+public void backupQueue() {
+    lastBackup = getAllQueuePatients(); // snapshot
+}
+
+public boolean undoQueue() {
+    if (lastBackup == null) return false;
+
+    // clear queue by dequeuing everything
+    int size = getQueueSize();
+    for (int i = 0; i < size; i++) {
+        dequeuePatient();
+    }
+
+    // restore
+    for (String[] p : lastBackup) {
+        enqueuePatient(p[0], p[1], p[2], p[3], p[4], p[5]);
+    }
+
+    lastBackup = null; // optional: only allow one undo
+    return true;
+}
+public boolean undoLastDeletedPatient() {
+    String[] p = DeletedPatient.getInstance().pop();
+    if (p == null) return false;
+
+    // If queue is full, you can't restore
+    if (isQueueFull()) return false;
+
+    // re-add patient to queue
+    return enqueuePatient(p[0], p[1], p[2], p[3], p[4], p[5]);
+}
 }

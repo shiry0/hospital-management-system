@@ -615,7 +615,20 @@ DeletedPatient.getInstance().push(deleted);
                 JOptionPane.showMessageDialog(this, "ID must be a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            //  get queue instance first
+            PatientQueueController queue = PatientQueueController.getInstance();
 
+            //  check duplicates in QUEUE (table uses queue data)
+            if (queue.idExistsInQueue(String.valueOf(id))) {
+            JOptionPane.showMessageDialog(this, "Patient with this ID already exists in queue!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+
+            //  then check duplicates in Model list too (optional but good)
+            if (Model.getPatientById(id) != null) {
+            JOptionPane.showMessageDialog(this, "Patient with this ID already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
             // Check for duplicate ID
             if (Model.getPatientById(id) != null) {
                 JOptionPane.showMessageDialog(this, "Patient with this ID already exists!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -640,7 +653,7 @@ DeletedPatient.getInstance().push(deleted);
             Model.addPatient(patient);
 
             // NEW: Add to queue so it appears in table immediately
-            PatientQueueController queue = PatientQueueController.getInstance();
+            
             queue.enqueuePatient(String.valueOf(id), name, gender, contact, address, String.valueOf(age));
             queue.backupQueue();
             

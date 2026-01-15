@@ -55,6 +55,8 @@ public class AddMed extends javax.swing.JPanel {
         MedTable = new javax.swing.JTable();
         Remove = new javax.swing.JButton();
         Refresh = new javax.swing.JButton();
+        SearchBtn = new javax.swing.JButton();
+        SearchTxt = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(219, 244, 245));
         jPanel1.setMinimumSize(new java.awt.Dimension(1707, 1607));
@@ -147,6 +149,21 @@ public class AddMed extends javax.swing.JPanel {
             }
         });
         jPanel1.add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 260, -1, -1));
+
+        SearchBtn.setText("Search");
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(SearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 260, -1, -1));
+
+        SearchTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchTxtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(SearchTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(841, 260, 170, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -323,6 +340,15 @@ public class AddMed extends javax.swing.JPanel {
     // Keep cursor before mg
     MedDoseTxtField.setCaretPosition(text.length());
     }//GEN-LAST:event_MedDoseTxtFieldKeyReleased
+
+    private void SearchTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchTxtActionPerformed
+
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        // TODO add your handling code here:
+        performBinarySearch();
+    }//GEN-LAST:event_SearchBtnActionPerformed
     
     private void loadMedTableFromManager() {
     javax.swing.table.DefaultTableModel model =
@@ -335,6 +361,68 @@ public class AddMed extends javax.swing.JPanel {
     }
 }
 
+private void performBinarySearch() {
+    String target = SearchTxt.getText().trim();
+
+    if (target.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Enter medicine name to search!");
+        return;
+    }
+
+    // 1) Get medicines and sort by name (binary search needs sorted list)
+    java.util.List<Medicine> meds = new java.util.ArrayList<>(medicineManager.getAllMedicinesFIFO());
+    meds.sort((a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+
+    // 2) Binary search
+    int idx = binarySearchByName(meds, target);
+
+    if (idx == -1) {
+        JOptionPane.showMessageDialog(this, "Medicine not found!");
+        return;
+    }
+
+    Medicine found = meds.get(idx);
+
+    // 3) Fill fields
+    MedNameTxtField.setText(found.getName());
+    MedDoseTxtField.setText(found.getDose());
+    MedUseTxtField.setText(found.getUse());
+    DocRecTxtArea.setText(found.getDoctorRec());
+
+    // 4) (Optional) highlight row in table
+    highlightInTable(found.getName());
+
+    JOptionPane.showMessageDialog(this, "Medicine found!");
+}
+
+private int binarySearchByName(java.util.List<Medicine> list, String targetName) {
+    int low = 0;
+    int high = list.size() - 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        int cmp = list.get(mid).getName().compareToIgnoreCase(targetName);
+
+        if (cmp == 0) return mid;
+        if (cmp < 0) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}
+
+private void highlightInTable(String medName) {
+    javax.swing.table.DefaultTableModel model =
+            (javax.swing.table.DefaultTableModel) MedTable.getModel();
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String tableName = model.getValueAt(i, 0).toString();
+        if (tableName.equalsIgnoreCase(medName)) {
+            MedTable.setRowSelectionInterval(i, i);
+            MedTable.scrollRectToVisible(MedTable.getCellRect(i, 0, true));
+            break;
+        }
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AddMed;
@@ -353,6 +441,8 @@ public class AddMed extends javax.swing.JPanel {
     private javax.swing.JTextField MedUseTxtField;
     private javax.swing.JButton Refresh;
     private javax.swing.JButton Remove;
+    private javax.swing.JButton SearchBtn;
+    private javax.swing.JTextField SearchTxt;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

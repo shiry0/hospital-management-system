@@ -1,4 +1,4 @@
-    package Controll;
+    package Controller;
 
     import View.AddPatient;
     import View.AdminPannel;

@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controll;
-import Model.Medicine;
+package Controller;
+import Models.Medicine;
 import java.util.*;
 ///**
 // * Singleton class to manage medicines across the application

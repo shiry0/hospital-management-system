@@ -2,13 +2,13 @@
      * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
      * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
      */
-    package Controll;
+    package Controller;
     import View.HomePage;
     import View.User_Panel;
     import View.AdminLoginPage;
     import View.UserLogin;
-    import Model.Model;
-    import Model.Model.allConstants;
+    import Models.Model;
+    import Models.Model.allConstants;
     import java.awt.Color;
 import javax.swing.JFrame;
     /**

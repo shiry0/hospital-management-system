@@ -1,6 +1,6 @@
-package Controll;
+package Controller;
 
-import Model.Model;  // <-- NEW: Import your Model class
+import Models.Model;  // <-- NEW: Import your Model class
 
 public class PatientQueueController {
     private static PatientQueueController instance;
@@ -138,7 +138,6 @@ public class PatientQueueController {
         }
         rebuildQueueDirect(patients);
     }
-
     // Sort queue by Name (ascending)
     public void sortQueueByName() {
         if (isQueueEmpty() || getQueueSize() == 1) return;

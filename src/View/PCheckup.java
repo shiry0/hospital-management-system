@@ -4,11 +4,11 @@
  */
 package View;
 
-import Controll.MedicineManager;
-import Controll.Navigator;
-import Controll.PatientQueueController;
-import Model.Medicine;
-import Controll.PrescriptionStore;
+import Controller.MedicineManager;
+import Controller.Navigator;
+import Controller.PatientQueueController;
+import Models.Medicine;
+import Controller.PrescriptionStore;
 
 
 

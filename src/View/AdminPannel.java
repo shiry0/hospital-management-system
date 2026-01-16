@@ -4,7 +4,7 @@
  */
 package View;
 
-import Controll.Navigator;
+import Controller.Navigator;
 import javax.swing.SwingUtilities;
 
 /**

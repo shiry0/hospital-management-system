@@ -4,9 +4,9 @@
  */
 package View;
 
-import Controll.MedicineManager;
-import Controll.Navigator;
-import Model.Medicine;
+import Controller.MedicineManager;
+import Controller.Navigator;
+import Models.Medicine;
 import javax.swing.JOptionPane;
 /**
  *

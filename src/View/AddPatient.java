@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package View;
-import Controll.Controll;
-import Controll.Navigator;
-import Controll.PatientQueueController;
-import Model.Model;
+import Controller.Controll;
+import Controller.Navigator;
+import Controller.PatientQueueController;
+import Models.Model;
 import javax.swing.JOptionPane;
-import Controll.DeletedPatient;
-import Controll.DeletedPatient;
+import Controller.DeletedPatient;
+import Controller.DeletedPatient;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -654,7 +654,7 @@ DeletedPatient.getInstance().push(deleted);
 
             // NEW: Add to queue so it appears in table immediately
             
-            queue.enqueuePatient(String.valueOf(id), name, gender, contact, address, String.valueOf(age));
+            queue.enqueuePatient(String.valueOf(id), name, gender, contact, String.valueOf(age), address);
             queue.backupQueue();
             
             JOptionPane.showMessageDialog(this, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);

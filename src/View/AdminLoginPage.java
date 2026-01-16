@@ -6,10 +6,10 @@ package View;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
-import Controll.Controll;
-import Model.Model;
-import static Model.Model.allConstants.LOGIN_KEY;
-import static Model.Model.allConstants.USER_KEY;
+import Controller.Controll;
+import Models.Model;
+import static Models.Model.allConstants.LOGIN_KEY;
+import static Models.Model.allConstants.USER_KEY;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;

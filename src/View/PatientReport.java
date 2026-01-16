@@ -4,11 +4,11 @@
  */
 package View;
 
-import Controll.DeletedPatient;
-import Controll.Navigator;
-import Controll.PatientQueueController;
-import Controll.PrescriptionStore;
-import Controll.PatientHistory;
+import Controller.DeletedPatient;
+import Controller.Navigator;
+import Controller.PatientQueueController;
+import Controller.PrescriptionStore;
+import Controller.PatientHistory;
 import javax.swing.JOptionPane;
 
 /**

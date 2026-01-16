@@ -4,8 +4,8 @@
  */
 package View;
 
-import Controll.Navigator;
-import Controll.PrescriptionStore;
+import Controller.Navigator;
+import Controller.PrescriptionStore;
 import javax.swing.JOptionPane;
 import View.AddPatient;
 
